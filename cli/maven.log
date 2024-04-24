@@ -1,0 +1,586 @@
+Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae)
+Maven home: /opt/maven
+Java version: 21.0.2, vendor: Eclipse Adoptium, runtime: /opt/jdk-21.0.2+13
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "5.15.0-101-generic", arch: "amd64", family: "unix"
+[DEBUG] org.codehaus.plexus.PlexusContainer - Created new class realm maven.api
+[DEBUG] org.codehaus.plexus.PlexusContainer - Importing foreign packages into class realm maven.api
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: javax.annotation.* < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: javax.annotation.security.* < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: javax.inject.* < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.* < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.artifact < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.classrealm < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.cli < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.configuration < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.exception < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.execution < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.execution.scope < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.graph < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.lifecycle < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.model < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.monitor < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.plugin < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.profiles < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.project < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.reporting < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.repository < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.rtinfo < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.settings < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.toolchain < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.usability < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.wagon.* < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.wagon.authentication < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.wagon.authorization < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.wagon.events < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.wagon.observers < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.wagon.proxy < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.wagon.repository < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.apache.maven.wagon.resource < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.codehaus.classworlds < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.codehaus.plexus.* < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.codehaus.plexus.classworlds < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.codehaus.plexus.component < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.codehaus.plexus.configuration < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.codehaus.plexus.container < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.codehaus.plexus.context < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.codehaus.plexus.lifecycle < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.codehaus.plexus.logging < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.codehaus.plexus.personality < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.codehaus.plexus.util.xml.Xpp3Dom < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.codehaus.plexus.util.xml.pull.XmlPullParser < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.codehaus.plexus.util.xml.pull.XmlPullParserException < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.codehaus.plexus.util.xml.pull.XmlSerializer < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.* < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.artifact < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.collection < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.deployment < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.graph < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.impl < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.installation < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.internal.impl < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.metadata < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.repository < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.resolution < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.spi < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.transfer < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.util < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.eclipse.aether.version < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.fusesource.jansi.* < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.slf4j.* < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.slf4j.event.* < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.slf4j.helpers.* < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported: org.slf4j.spi.* < plexus.core
+[DEBUG] org.codehaus.plexus.PlexusContainer - Populating class realm maven.api
+[DEBUG] org.eclipse.aether.internal.impl.synccontext.named.NamedLockFactoryAdapterFactoryImpl - Created adapter factory; available factories [file-lock, rwlock-local, semaphore-local, noop]; available name mappers [discriminating, file-gav, file-hgav, file-static, gav, static]
+[INFO] org.apache.maven.cli.MavenCli - Error stacktraces are turned on.
+[DEBUG] org.apache.maven.cli.MavenCli - Message scheme: color
+[DEBUG] org.apache.maven.cli.MavenCli - Message styles: debug info warning error success failure strong mojo project
+[DEBUG] org.apache.maven.cli.configuration.SettingsXmlConfigurationProcessor - Reading global settings from /opt/maven/conf/settings.xml
+[DEBUG] org.apache.maven.cli.configuration.SettingsXmlConfigurationProcessor - Reading user settings from /home/mspring/.m2/settings.xml
+[DEBUG] org.apache.maven.cli.MavenCli - Reading global toolchains from /opt/maven/conf/toolchains.xml
+[DEBUG] org.apache.maven.cli.MavenCli - Reading user toolchains from /home/mspring/.m2/toolchains.xml
+[DEBUG] org.apache.maven.DefaultMaven - Using local repository at /home/mspring/.m2/repository
+[DEBUG] org.eclipse.aether.internal.impl.DefaultLocalRepositoryProvider - Using manager EnhancedLocalRepositoryManager with priority 10.0 for /home/mspring/.m2/repository
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - Scanning for projects...
+[DEBUG] org.apache.maven.project.DefaultProjectBuildingHelper - Extension realms for project org.springdot.sandbox.multi-module-app:appl:jar:1.0-SNAPSHOT: (none)
+[DEBUG] org.apache.maven.lifecycle.internal.DefaultLifecyclePluginAnalyzer - Looking up lifecycle mappings for packaging jar from ClassRealm[plexus.core, parent: null]
+[DEBUG] org.apache.maven.project.DefaultProjectBuildingHelper - Extension realms for project org.springdot.sandbox.multi-module-app:multi-module-app-root:pom:1.0-SNAPSHOT: (none)
+[DEBUG] org.apache.maven.lifecycle.internal.DefaultLifecyclePluginAnalyzer - Looking up lifecycle mappings for packaging pom from ClassRealm[plexus.core, parent: null]
+[DEBUG] org.apache.maven.plugin.prefix.internal.DefaultPluginPrefixResolver - Resolving plugin prefix exec from [com.cisco.dascode, org.apache.maven.plugins, org.codehaus.mojo]
+[DEBUG] org.eclipse.aether.internal.impl.synccontext.named.NamedLockFactoryAdapterFactoryImpl - Creating adapter using nameMapper 'gav' and factory 'rwlock-local'
+[DEBUG] org.apache.maven.plugin.prefix.internal.DefaultPluginPrefixResolver - Resolved plugin prefix exec to org.codehaus.mojo:exec-maven-plugin from POM org.springdot.sandbox.multi-module-app:appl:jar:1.0-SNAPSHOT
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - === REACTOR BUILD PLAN ================================================
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Project: org.springdot.sandbox.multi-module-app:appl:jar:1.0-SNAPSHOT
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Tasks:   [compile, exec:exec@runApp]
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Style:   Regular
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - =======================================================================
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - 
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - ------------< org.springdot.sandbox.multi-module-app:appl >-------------
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - Building appl 1.0-SNAPSHOT
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger -   from pom.xml
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - --------------------------------[ jar ]---------------------------------
+[DEBUG] org.apache.maven.lifecycle.DefaultLifecycles - Lifecycle clean -> [pre-clean, clean, post-clean]
+[DEBUG] org.apache.maven.lifecycle.DefaultLifecycles - Lifecycle default -> [validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy]
+[DEBUG] org.apache.maven.lifecycle.DefaultLifecycles - Lifecycle site -> [pre-site, site, post-site, site-deploy]
+[DEBUG] org.apache.maven.plugin.prefix.internal.DefaultPluginPrefixResolver - Resolving plugin prefix exec from [com.cisco.dascode, org.apache.maven.plugins, org.codehaus.mojo]
+[DEBUG] org.apache.maven.plugin.prefix.internal.DefaultPluginPrefixResolver - Resolved plugin prefix exec to org.codehaus.mojo:exec-maven-plugin from POM org.springdot.sandbox.multi-module-app:appl:jar:1.0-SNAPSHOT
+[DEBUG] org.apache.maven.lifecycle.DefaultLifecycles - Lifecycle clean -> [pre-clean, clean, post-clean]
+[DEBUG] org.apache.maven.lifecycle.DefaultLifecycles - Lifecycle default -> [validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy]
+[DEBUG] org.apache.maven.lifecycle.DefaultLifecycles - Lifecycle site -> [pre-site, site, post-site, site-deploy]
+[DEBUG] org.apache.maven.lifecycle.DefaultLifecycles - Lifecycle clean -> [pre-clean, clean, post-clean]
+[DEBUG] org.apache.maven.lifecycle.DefaultLifecycles - Lifecycle default -> [validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy]
+[DEBUG] org.apache.maven.lifecycle.DefaultLifecycles - Lifecycle site -> [pre-site, site, post-site, site-deploy]
+[DEBUG] org.apache.maven.lifecycle.DefaultLifecycles - Lifecycle clean -> [pre-clean, clean, post-clean]
+[DEBUG] org.apache.maven.lifecycle.DefaultLifecycles - Lifecycle default -> [validate, initialize, generate-sources, process-sources, generate-resources, process-resources, compile, process-classes, generate-test-sources, process-test-sources, generate-test-resources, process-test-resources, test-compile, process-test-classes, test, prepare-package, package, pre-integration-test, integration-test, post-integration-test, verify, install, deploy]
+[DEBUG] org.apache.maven.lifecycle.DefaultLifecycles - Lifecycle site -> [pre-site, site, post-site, site-deploy]
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - === PROJECT BUILD PLAN ================================================
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Project:       org.springdot.sandbox.multi-module-app:appl:1.0-SNAPSHOT
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Dependencies (collect): []
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Dependencies (resolve): [compile, test]
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Repositories (dependencies): [central (https://repo.maven.apache.org/maven2, default, releases)]
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Repositories (plugins)     : [central (https://repo.maven.apache.org/maven2, default, releases)]
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - -----------------------------------------------------------------------
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Goal:          org.apache.maven.plugins:maven-resources-plugin:3.3.1:resources (default-resources)
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Style:         Regular
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Configuration: <?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <addDefaultExcludes default-value="true"/>
+  <buildFilters default-value="${project.build.filters}"/>
+  <encoding default-value="${project.build.sourceEncoding}"/>
+  <escapeWindowsPaths default-value="true"/>
+  <fileNameFiltering default-value="false"/>
+  <includeEmptyDirs default-value="false"/>
+  <outputDirectory default-value="${project.build.outputDirectory}"/>
+  <overwrite default-value="false"/>
+  <project default-value="${project}"/>
+  <resources default-value="${project.resources}"/>
+  <session default-value="${session}"/>
+  <skip default-value="false">${maven.resources.skip}</skip>
+  <supportMultiLineFiltering default-value="false"/>
+  <useBuildFilters default-value="true"/>
+  <useDefaultDelimiters default-value="true"/>
+</configuration>
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - -----------------------------------------------------------------------
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Goal:          org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile)
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Style:         Regular
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Configuration: <?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <basedir default-value="${basedir}"/>
+  <buildDirectory default-value="${project.build.directory}"/>
+  <compilePath default-value="${project.compileClasspathElements}"/>
+  <compileSourceRoots default-value="${project.compileSourceRoots}"/>
+  <compilerId default-value="javac">${maven.compiler.compilerId}</compilerId>
+  <compilerReuseStrategy default-value="${reuseCreated}">${maven.compiler.compilerReuseStrategy}</compilerReuseStrategy>
+  <compilerVersion>${maven.compiler.compilerVersion}</compilerVersion>
+  <createMissingPackageInfoClass default-value="true">${maven.compiler.createMissingPackageInfoClass}</createMissingPackageInfoClass>
+  <debug default-value="true">${maven.compiler.debug}</debug>
+  <debugFileName default-value="javac"/>
+  <debuglevel>${maven.compiler.debuglevel}</debuglevel>
+  <enablePreview default-value="false">${maven.compiler.enablePreview}</enablePreview>
+  <encoding default-value="${project.build.sourceEncoding}">${encoding}</encoding>
+  <executable>${maven.compiler.executable}</executable>
+  <failOnError default-value="true">${maven.compiler.failOnError}</failOnError>
+  <failOnWarning default-value="false">${maven.compiler.failOnWarning}</failOnWarning>
+  <forceJavacCompilerUse default-value="false">${maven.compiler.forceJavacCompilerUse}</forceJavacCompilerUse>
+  <fork default-value="false">${maven.compiler.fork}</fork>
+  <generatedSourcesDirectory default-value="${project.build.directory}/generated-sources/annotations"/>
+  <implicit>${maven.compiler.implicit}</implicit>
+  <maxmem>${maven.compiler.maxmem}</maxmem>
+  <meminitial>${maven.compiler.meminitial}</meminitial>
+  <mojoExecution default-value="${mojoExecution}"/>
+  <optimize default-value="false">${maven.compiler.optimize}</optimize>
+  <outputDirectory default-value="${project.build.outputDirectory}"/>
+  <parameters default-value="false">${maven.compiler.parameters}</parameters>
+  <project default-value="${project}"/>
+  <projectArtifact default-value="${project.artifact}"/>
+  <release>${maven.compiler.release}</release>
+  <session default-value="${session}"/>
+  <showCompilationChanges default-value="false">${maven.compiler.showCompilationChanges}</showCompilationChanges>
+  <showDeprecation default-value="false">${maven.compiler.showDeprecation}</showDeprecation>
+  <showWarnings default-value="true">${maven.compiler.showWarnings}</showWarnings>
+  <skipMain>${maven.main.skip}</skipMain>
+  <skipMultiThreadWarning default-value="false">${maven.compiler.skipMultiThreadWarning}</skipMultiThreadWarning>
+  <source default-value="1.8">${maven.compiler.source}</source>
+  <staleMillis default-value="0">${lastModGranularityMs}</staleMillis>
+  <target default-value="1.8">${maven.compiler.target}</target>
+  <useIncrementalCompilation default-value="true">${maven.compiler.useIncrementalCompilation}</useIncrementalCompilation>
+  <verbose default-value="false">${maven.compiler.verbose}</verbose>
+</configuration>
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - -----------------------------------------------------------------------
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Goal:          org.codehaus.mojo:exec-maven-plugin:3.1.0:exec (runApp)
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Style:         Regular
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - Configuration: <?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <addOutputToClasspath default-value="true">${addOutputToClasspath}</addOutputToClasspath>
+  <addResourcesToClasspath default-value="false">${addResourcesToClasspath}</addResourcesToClasspath>
+  <arguments>
+    <argument>--class-path</argument>
+    <classpath/>
+    <argument>appl.app.module.org.springdot.forpan.core.App</argument>
+  </arguments>
+  <async default-value="false">${exec.async}</async>
+  <asyncDestroyOnShutdown default-value="true">${exec.asyncDestroyOnShutdown}</asyncDestroyOnShutdown>
+  <basedir default-value="${basedir}"/>
+  <buildDirectory default-value="${project.build.directory}"/>
+  <classpathScope default-value="runtime">${exec.classpathScope}</classpathScope>
+  <commandlineArgs>${exec.args}</commandlineArgs>
+  <executable>java</executable>
+  <inheritIo>${exec.inheritIo}</inheritIo>
+  <longClasspath default-value="false">${exec.longClasspath}</longClasspath>
+  <longModulepath default-value="true">${exec.longModulepath}</longModulepath>
+  <outputFile>${exec.outputFile}</outputFile>
+  <pluginDependencies default-value="${plugin.artifacts}"/>
+  <project default-value="${project}"/>
+  <quietLogs default-value="false">${exec.quietLogs}</quietLogs>
+  <session default-value="${session}"/>
+  <skip default-value="false">${exec.skip}</skip>
+  <sourceRoot>${sourceRoot}</sourceRoot>
+  <testSourceRoot>${testSourceRoot}</testSourceRoot>
+  <timeout default-value="0">${exec.timeout}</timeout>
+  <toolchain default-value="jdk">${exec.toolchain}</toolchain>
+  <useMavenLogger default-value="false">${exec.useMavenLogger}</useMavenLogger>
+  <workingDirectory>${exec.workingdir}</workingDirectory>
+</configuration>
+[DEBUG] org.apache.maven.lifecycle.internal.LifecycleDebugLogger - =======================================================================
+[DEBUG] org.eclipse.aether.internal.impl.collect.df.DfDependencyCollector - Dependency collection stats {ConflictMarker.analyzeTime=45458, ConflictMarker.markTime=88266, ConflictMarker.nodeCount=1, ConflictIdSorter.graphTime=14533, ConflictIdSorter.topsortTime=306849, ConflictIdSorter.conflictIdCount=0, ConflictIdSorter.conflictIdCycleCount=0, ConflictResolver.totalTime=947288, ConflictResolver.conflictItemCount=0, DfDependencyCollector.collectTime=105905, DfDependencyCollector.transformTime=2398317}
+[DEBUG] org.apache.maven.project.DefaultProjectDependenciesResolver - org.springdot.sandbox.multi-module-app:appl:jar:1.0-SNAPSHOT
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - 
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - --- resources:3.3.1:resources (default-resources) @ appl ---
+[DEBUG] org.eclipse.aether.internal.impl.collect.df.DfDependencyCollector - Dependency collection stats {ConflictMarker.analyzeTime=573968, ConflictMarker.markTime=65851, ConflictMarker.nodeCount=13, ConflictIdSorter.graphTime=80963, ConflictIdSorter.topsortTime=21600, ConflictIdSorter.conflictIdCount=9, ConflictIdSorter.conflictIdCycleCount=0, ConflictResolver.totalTime=1461948, ConflictResolver.conflictItemCount=13, DfDependencyCollector.collectTime=54635442, DfDependencyCollector.transformTime=2228256}
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver - org.apache.maven.plugins:maven-resources-plugin:jar:3.3.1
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -    org.codehaus.plexus:plexus-interpolation:jar:1.26:runtime
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -    org.codehaus.plexus:plexus-utils:jar:3.5.1:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -    org.apache.maven.shared:maven-filtering:jar:3.3.1:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -       javax.inject:javax.inject:jar:1:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -       org.slf4j:slf4j-api:jar:1.7.36:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -       org.sonatype.plexus:plexus-build-api:jar:0.0.7:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -    commons-io:commons-io:jar:2.11.0:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -    org.apache.commons:commons-lang3:jar:3.12.0:compile
+[DEBUG] org.codehaus.plexus.PlexusContainer - Created new class realm plugin>org.apache.maven.plugins:maven-resources-plugin:3.3.1
+[DEBUG] org.codehaus.plexus.PlexusContainer - Importing foreign packages into class realm plugin>org.apache.maven.plugins:maven-resources-plugin:3.3.1
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported:  < maven.api
+[DEBUG] org.codehaus.plexus.PlexusContainer - Populating class realm plugin>org.apache.maven.plugins:maven-resources-plugin:3.3.1
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.apache.maven.plugins:maven-resources-plugin:jar:3.3.1
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.codehaus.plexus:plexus-interpolation:jar:1.26
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.codehaus.plexus:plexus-utils:jar:3.5.1
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.apache.maven.shared:maven-filtering:jar:3.3.1
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.sonatype.plexus:plexus-build-api:jar:0.0.7
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: commons-io:commons-io:jar:2.11.0
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.apache.commons:commons-lang3:jar:3.12.0
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager - Loading mojo org.apache.maven.plugins:maven-resources-plugin:3.3.1:resources from plugin realm ClassRealm[plugin>org.apache.maven.plugins:maven-resources-plugin:3.3.1, parent: jdk.internal.loader.ClassLoaders$AppClassLoader@4f2410ac]
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager - Configuring mojo execution 'org.apache.maven.plugins:maven-resources-plugin:3.3.1:resources:default-resources' with basic configurator -->
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) addDefaultExcludes = true
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) buildFilters = []
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) encoding = UTF-8
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) escapeWindowsPaths = true
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) fileNameFiltering = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (s) includeEmptyDirs = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (s) outputDirectory = /ws/sandbox/java-modules/multi-module-app/appl/target/classes
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (s) overwrite = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) project = MavenProject: org.springdot.sandbox.multi-module-app:appl:1.0-SNAPSHOT @ /ws/sandbox/java-modules/multi-module-app/appl/pom.xml
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (s) resources = [Resource {targetPath: null, filtering: false, FileSet {directory: /ws/sandbox/java-modules/multi-module-app/appl/src/main/resources, PatternSet [includes: {}, excludes: {}]}}]
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) session = org.apache.maven.execution.MavenSession@39e43310
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) skip = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) supportMultiLineFiltering = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) useBuildFilters = true
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (s) useDefaultDelimiters = true
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager - -- end configuration --
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - properties used:
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - classworlds.conf: /opt/maven/bin/m2.conf
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.BUILD_NUMBER: unknown
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.COLORTERM: truecolor
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.CONVERT: /usr/bin/convert
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.CPANEL_PASS: I3BFRIQ00V41CQVQKGVT6B0OF74KCNJ5
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.DBUS_SESSION_BUS_ADDRESS: unix:path=/run/user/24401/bus
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.DESKTOP_SESSION: xfce
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.DISPLAY: :1.0
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.EDITOR: /usr/bin/emacs --no-desktop --reverse-video
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.GDMSESSION: xfce
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.GIT: /usr/bin/git
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.GTK_MODULES: gail:atk-bridge:appmenu-gtk-module
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.HISTFILE: /home/mspring/.bash_eternal_history
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.HISTFILESIZE: 2000
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.HISTSIZE: 1000
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.HISTTIMEFORMAT: [%F %T] 
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.HOME: /home/mspring
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.JAVA_HOME: /opt/jdk21
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.LANG: en_US.UTF-8
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.LESSCLOSE: /usr/bin/lesspipe %s %s
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.LESSOPEN: | /usr/bin/lesspipe %s
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.LIBVIRT_DEFAULT_URI: qemu:///system
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.LOGNAME: mspring
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.LS_COLORS: rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.LZMA: /usr/bin/lzma
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.MAVEN_CMD_LINE_ARGS:  -X -Dorg.slf4j.simpleLogger.showLogName=true compile exec:exec@runApp
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.MAVEN_HOME: /opt/maven
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.MAVEN_PROJECTBASEDIR: /ws/sandbox/java-modules/multi-module-app/appl
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.OLDPWD: /ws/sandbox/java-modules/multi-module-app/appl
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.PATH: /opt/jdk21/bin:/opt/maven/bin:/home/mspring/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.PWD: /ws/sandbox/java-modules/multi-module-app/appl
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.QT_ACCESSIBILITY: 1
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.QT_QPA_PLATFORMTHEME: qt5ct
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.RSYNC_OPTIONS: --info=progress2
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.SESSION_MANAGER: local/mspring-lt4:@/tmp/.ICE-unix/3970,unix/mspring-lt4:/tmp/.ICE-unix/3970
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.SHELL: /bin/bash
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.SHLVL: 1
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.SSH_AGENT_PID: 4183
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.SSH_AUTH_SOCK: /tmp/ssh-XXXXXXapGaq3/agent.4177
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.SYSTEMD_EXEC_PID: 3451
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.TERM: xterm-color
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.UBUNTU_MENUPROXY: 1
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.USER: mspring
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.USERNAME: mspring
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.VTE_VERSION: 6800
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.WINDOWID: 111149059
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.WINDOWPATH: 2
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.XAUTHORITY: /run/user/24401/gdm/Xauthority
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.XDG_CONFIG_DIRS: /etc/xdg/xdg-xfce:/etc/xdg:/etc/xdg
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.XDG_CURRENT_DESKTOP: ubuntu:GNOME
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.XDG_DATA_DIRS: /usr/share/xfce4:/usr/share/xfce:/usr/share/gnome:/home/mspring/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop:/usr/share
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.XDG_MENU_PREFIX: xfce-
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.XDG_RUNTIME_DIR: /run/user/24401
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.XDG_SEAT: seat0
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.XDG_SESSION_CLASS: user
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.XDG_SESSION_DESKTOP: xfce
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.XDG_SESSION_ID: 2
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.XDG_SESSION_TYPE: x11
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.XDG_VTNR: 2
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env.XML: /usr/bin/xmlstarlet
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - env._: /opt/maven/bin/mvn
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - file.encoding: UTF-8
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - file.separator: /
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.class.path: /opt/maven/boot/plexus-classworlds-2.7.0.jar
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.class.version: 65.0
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.home: /opt/jdk-21.0.2+13
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.io.tmpdir: /tmp
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.library.path: /usr/java/packages/lib:/usr/lib64:/lib64:/lib:/usr/lib
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.runtime.name: OpenJDK Runtime Environment
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.runtime.version: 21.0.2+13-LTS
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.specification.name: Java Platform API Specification
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.specification.vendor: Oracle Corporation
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.specification.version: 21
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.vendor: Eclipse Adoptium
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.vendor.url: https://adoptium.net/
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.vendor.url.bug: https://github.com/adoptium/adoptium-support/issues
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.vendor.version: Temurin-21.0.2+13
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.version: 21.0.2
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.version.date: 2024-01-16
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.vm.compressedOopsMode: Zero based
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.vm.info: mixed mode, sharing
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.vm.name: OpenJDK 64-Bit Server VM
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.vm.specification.name: Java Virtual Machine Specification
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.vm.specification.vendor: Oracle Corporation
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.vm.specification.version: 21
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.vm.vendor: Eclipse Adoptium
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - java.vm.version: 21.0.2+13-LTS
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - jdk.debug: release
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - library.jansi.path: /opt/maven/lib/jansi-native
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - line.separator: 
+
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - maven.build.timestamp: 2024-03-30T18:42:43Z
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - maven.build.version: Apache Maven 3.9.6 (bc0240f3c744dd6b6ec2920b3cd08dcc295161ae)
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - maven.compiler.source: 21
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - maven.compiler.target: 21
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - maven.conf: /opt/maven/conf
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - maven.home: /opt/maven
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - maven.multiModuleProjectDirectory: /ws/sandbox/java-modules/multi-module-app/appl
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - maven.version: 3.9.6
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - native.encoding: UTF-8
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - org.slf4j.simpleLogger.showLogName: true
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - os.arch: amd64
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - os.name: Linux
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - os.version: 5.15.0-101-generic
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - path.separator: :
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - project.baseUri: file:/ws/sandbox/java-modules/multi-module-app/appl/
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - project.build.sourceEncoding: UTF-8
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - stderr.encoding: UTF-8
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - stdout.encoding: UTF-8
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - sun.arch.data.model: 64
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - sun.boot.library.path: /opt/jdk-21.0.2+13/lib
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - sun.cpu.endian: little
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - sun.io.unicode.encoding: UnicodeLittle
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - sun.java.command: org.codehaus.plexus.classworlds.launcher.Launcher -X -Dorg.slf4j.simpleLogger.showLogName=true compile exec:exec@runApp
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - sun.java.launcher: SUN_STANDARD
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - sun.jnu.encoding: UTF-8
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - sun.management.compiler: HotSpot 64-Bit Tiered Compilers
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - user.country: US
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - user.dir: /ws/sandbox/java-modules/multi-module-app/appl
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - user.home: /home/mspring
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - user.language: en
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenFileFilter - user.name: mspring
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenResourcesFiltering - Using 'UTF-8' encoding to copy filtered resources.
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenResourcesFiltering - Using 'UTF-8' encoding to copy filtered properties files.
+[DEBUG] org.apache.maven.shared.filtering.DefaultMavenResourcesFiltering - resource with targetPath null
+directory /ws/sandbox/java-modules/multi-module-app/appl/src/main/resources
+excludes []
+includes []
+[INFO] org.apache.maven.shared.filtering.DefaultMavenResourcesFiltering - skip non existing resourceDirectory /ws/sandbox/java-modules/multi-module-app/appl/src/main/resources
+[DEBUG] org.apache.maven.plugins.resources.ResourcesMojo - no user filter components
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - 
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - --- compiler:3.11.0:compile (default-compile) @ appl ---
+[DEBUG] org.eclipse.aether.internal.impl.DefaultRemoteRepositoryManager - Using mirror maven-default-http-blocker (http://0.0.0.0/) for apache.snapshots (http://repository.apache.org/snapshots).
+[DEBUG] org.eclipse.aether.internal.impl.collect.df.DfDependencyCollector - Dependency collection stats {ConflictMarker.analyzeTime=58138, ConflictMarker.markTime=64509, ConflictMarker.nodeCount=17, ConflictIdSorter.graphTime=20215, ConflictIdSorter.topsortTime=16254, ConflictIdSorter.conflictIdCount=12, ConflictIdSorter.conflictIdCycleCount=0, ConflictResolver.totalTime=482898, ConflictResolver.conflictItemCount=17, DfDependencyCollector.collectTime=49144965, DfDependencyCollector.transformTime=666994}
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver - org.apache.maven.plugins:maven-compiler-plugin:jar:3.11.0
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -    org.apache.maven.shared:maven-shared-utils:jar:3.3.4:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -       commons-io:commons-io:jar:2.6:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -    org.apache.maven.shared:maven-shared-incremental:jar:1.1:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -       org.codehaus.plexus:plexus-component-annotations:jar:1.5.5:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -    org.codehaus.plexus:plexus-java:jar:1.1.2:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -       org.ow2.asm:asm:jar:9.4:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -       com.thoughtworks.qdox:qdox:jar:2.0.3:compile (version managed from default)
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -    org.codehaus.plexus:plexus-compiler-api:jar:2.13.0:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -       org.codehaus.plexus:plexus-utils:jar:3.5.0:compile (version managed from default)
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -    org.codehaus.plexus:plexus-compiler-manager:jar:2.13.0:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -    org.codehaus.plexus:plexus-compiler-javac:jar:2.13.0:runtime
+[DEBUG] org.codehaus.plexus.PlexusContainer - Created new class realm plugin>org.apache.maven.plugins:maven-compiler-plugin:3.11.0
+[DEBUG] org.codehaus.plexus.PlexusContainer - Importing foreign packages into class realm plugin>org.apache.maven.plugins:maven-compiler-plugin:3.11.0
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported:  < maven.api
+[DEBUG] org.codehaus.plexus.PlexusContainer - Populating class realm plugin>org.apache.maven.plugins:maven-compiler-plugin:3.11.0
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.apache.maven.plugins:maven-compiler-plugin:jar:3.11.0
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.apache.maven.shared:maven-shared-utils:jar:3.3.4
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: commons-io:commons-io:jar:2.6
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.apache.maven.shared:maven-shared-incremental:jar:1.1
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.codehaus.plexus:plexus-component-annotations:jar:1.5.5
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.codehaus.plexus:plexus-java:jar:1.1.2
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.ow2.asm:asm:jar:9.4
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: com.thoughtworks.qdox:qdox:jar:2.0.3
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.codehaus.plexus:plexus-compiler-api:jar:2.13.0
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.codehaus.plexus:plexus-utils:jar:3.5.0
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.codehaus.plexus:plexus-compiler-manager:jar:2.13.0
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.codehaus.plexus:plexus-compiler-javac:jar:2.13.0
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager - Loading mojo org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile from plugin realm ClassRealm[plugin>org.apache.maven.plugins:maven-compiler-plugin:3.11.0, parent: jdk.internal.loader.ClassLoaders$AppClassLoader@4f2410ac]
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager - Configuring mojo execution 'org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile:default-compile' with basic configurator -->
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) basedir = /ws/sandbox/java-modules/multi-module-app/appl
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) buildDirectory = /ws/sandbox/java-modules/multi-module-app/appl/target
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) compilePath = [/ws/sandbox/java-modules/multi-module-app/appl/target/classes]
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) compileSourceRoots = [/ws/sandbox/java-modules/multi-module-app/appl/src/main/java]
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) compilerId = javac
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) createMissingPackageInfoClass = true
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) debug = true
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) debugFileName = javac
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) enablePreview = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) encoding = UTF-8
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) failOnError = true
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) failOnWarning = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) forceJavacCompilerUse = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) fork = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) generatedSourcesDirectory = /ws/sandbox/java-modules/multi-module-app/appl/target/generated-sources/annotations
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) mojoExecution = org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile {execution: default-compile}
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) optimize = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) outputDirectory = /ws/sandbox/java-modules/multi-module-app/appl/target/classes
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) parameters = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) project = MavenProject: org.springdot.sandbox.multi-module-app:appl:1.0-SNAPSHOT @ /ws/sandbox/java-modules/multi-module-app/appl/pom.xml
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) projectArtifact = org.springdot.sandbox.multi-module-app:appl:jar:1.0-SNAPSHOT
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) session = org.apache.maven.execution.MavenSession@39e43310
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) showCompilationChanges = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) showDeprecation = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) showWarnings = true
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) skipMultiThreadWarning = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) source = 21
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) staleMillis = 0
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (s) target = 21
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) useIncrementalCompilation = true
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) verbose = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager - -- end configuration --
+[DEBUG] org.apache.maven.plugin.compiler.CompilerMojo - Using compiler 'javac'.
+[DEBUG] org.apache.maven.plugin.compiler.CompilerMojo - Adding /ws/sandbox/java-modules/multi-module-app/appl/target/generated-sources/annotations to compile source roots:
+  /ws/sandbox/java-modules/multi-module-app/appl/src/main/java
+[DEBUG] org.apache.maven.plugin.compiler.CompilerMojo - New compile source roots:
+  /ws/sandbox/java-modules/multi-module-app/appl/src/main/java
+  /ws/sandbox/java-modules/multi-module-app/appl/target/generated-sources/annotations
+[DEBUG] org.apache.maven.plugin.compiler.CompilerMojo - CompilerReuseStrategy: reuseCreated
+[DEBUG] org.apache.maven.plugin.compiler.CompilerMojo - useIncrementalCompilation enabled
+[INFO] org.apache.maven.plugin.compiler.CompilerMojo - Nothing to compile - all classes are up to date
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - 
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - --- exec:3.1.0:exec (runApp) @ appl ---
+[DEBUG] org.eclipse.aether.internal.impl.collect.df.DfDependencyCollector - Dependency collection stats {ConflictMarker.analyzeTime=26118, ConflictMarker.markTime=51790, ConflictMarker.nodeCount=4, ConflictIdSorter.graphTime=8286, ConflictIdSorter.topsortTime=9781, ConflictIdSorter.conflictIdCount=4, ConflictIdSorter.conflictIdCycleCount=0, ConflictResolver.totalTime=131742, ConflictResolver.conflictItemCount=4, DfDependencyCollector.collectTime=11978764, DfDependencyCollector.transformTime=244560}
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver - org.codehaus.mojo:exec-maven-plugin:jar:3.1.0
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -    org.codehaus.plexus:plexus-utils:jar:3.4.2:compile
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -    org.codehaus.plexus:plexus-component-annotations:jar:2.1.1:compile (optional)
+[DEBUG] org.apache.maven.plugin.internal.DefaultPluginDependenciesResolver -    org.apache.commons:commons-exec:jar:1.3:compile
+[DEBUG] org.codehaus.plexus.PlexusContainer - Created new class realm plugin>org.codehaus.mojo:exec-maven-plugin:3.1.0
+[DEBUG] org.codehaus.plexus.PlexusContainer - Importing foreign packages into class realm plugin>org.codehaus.mojo:exec-maven-plugin:3.1.0
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Imported:  < maven.api
+[DEBUG] org.codehaus.plexus.PlexusContainer - Populating class realm plugin>org.codehaus.mojo:exec-maven-plugin:3.1.0
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.codehaus.mojo:exec-maven-plugin:jar:3.1.0
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.codehaus.plexus:plexus-utils:jar:3.4.2
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.codehaus.plexus:plexus-component-annotations:jar:2.1.1
+[DEBUG] org.codehaus.plexus.PlexusContainer -   Included: org.apache.commons:commons-exec:jar:1.3
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager - Loading mojo org.codehaus.mojo:exec-maven-plugin:3.1.0:exec from plugin realm ClassRealm[plugin>org.codehaus.mojo:exec-maven-plugin:3.1.0, parent: jdk.internal.loader.ClassLoaders$AppClassLoader@4f2410ac]
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager - Configuring mojo execution 'org.codehaus.mojo:exec-maven-plugin:3.1.0:exec:runApp' with basic configurator -->
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) addOutputToClasspath = true
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) addResourcesToClasspath = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) arguments = [--class-path, Classpath {}, appl.app.module.org.springdot.forpan.core.App]
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) async = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) asyncDestroyOnShutdown = true
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) basedir = /ws/sandbox/java-modules/multi-module-app/appl
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) buildDirectory = /ws/sandbox/java-modules/multi-module-app/appl/target
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) classpathScope = runtime
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) executable = java
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) longClasspath = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) longModulepath = true
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) pluginDependencies = [org.codehaus.mojo:exec-maven-plugin:maven-plugin:3.1.0:, org.codehaus.plexus:plexus-utils:jar:3.4.2:compile, org.codehaus.plexus:plexus-component-annotations:jar:2.1.1:compile, org.apache.commons:commons-exec:jar:1.3:compile]
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) project = MavenProject: org.springdot.sandbox.multi-module-app:appl:1.0-SNAPSHOT @ /ws/sandbox/java-modules/multi-module-app/appl/pom.xml
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) quietLogs = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) session = org.apache.maven.execution.MavenSession@39e43310
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) skip = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) timeout = 0
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) toolchain = jdk
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager -   (f) useMavenLogger = false
+[DEBUG] org.apache.maven.plugin.internal.DefaultMavenPluginManager - -- end configuration --
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - Collected project artifacts []
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - Collected project classpath [/ws/sandbox/java-modules/multi-module-app/appl/target/classes]
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: BUILD_NUMBER=unknown
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: COLORTERM=truecolor
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: CONVERT=/usr/bin/convert
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: CPANEL_PASS=I3BFRIQ00V41CQVQKGVT6B0OF74KCNJ5
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/24401/bus
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: DESKTOP_SESSION=xfce
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: DISPLAY=:1.0
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: EDITOR=/usr/bin/emacs --no-desktop --reverse-video
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: GDMSESSION=xfce
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: GIT=/usr/bin/git
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: GTK_MODULES=gail:atk-bridge:appmenu-gtk-module
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: HISTFILE=/home/mspring/.bash_eternal_history
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: HISTFILESIZE=2000
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: HISTSIZE=1000
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: HISTTIMEFORMAT=[%F %T] 
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: HOME=/home/mspring
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: JAVA_HOME=/opt/jdk21
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: LANG=en_US.UTF-8
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: LESSCLOSE=/usr/bin/lesspipe %s %s
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: LESSOPEN=| /usr/bin/lesspipe %s
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: LIBVIRT_DEFAULT_URI=qemu:///system
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: LOGNAME=mspring
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: LZMA=/usr/bin/lzma
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: MAVEN_CMD_LINE_ARGS= -X -Dorg.slf4j.simpleLogger.showLogName=true compile exec:exec@runApp
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: MAVEN_HOME=/opt/maven
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: MAVEN_PROJECTBASEDIR=/ws/sandbox/java-modules/multi-module-app/appl
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: OLDPWD=/ws/sandbox/java-modules/multi-module-app/appl
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: PATH=/opt/jdk21/bin:/opt/maven/bin:/home/mspring/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: PWD=/ws/sandbox/java-modules/multi-module-app/appl
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: QT_ACCESSIBILITY=1
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: QT_QPA_PLATFORMTHEME=qt5ct
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: RSYNC_OPTIONS=--info=progress2
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: SESSION_MANAGER=local/mspring-lt4:@/tmp/.ICE-unix/3970,unix/mspring-lt4:/tmp/.ICE-unix/3970
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: SHELL=/bin/bash
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: SHLVL=1
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: SSH_AGENT_PID=4183
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: SSH_AUTH_SOCK=/tmp/ssh-XXXXXXapGaq3/agent.4177
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: SYSTEMD_EXEC_PID=3451
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: TERM=xterm-color
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: UBUNTU_MENUPROXY=1
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: USER=mspring
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: USERNAME=mspring
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: VTE_VERSION=6800
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: WINDOWID=111149059
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: WINDOWPATH=2
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: XAUTHORITY=/run/user/24401/gdm/Xauthority
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: XDG_CONFIG_DIRS=/etc/xdg/xdg-xfce:/etc/xdg:/etc/xdg
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: XDG_CURRENT_DESKTOP=ubuntu:GNOME
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: XDG_DATA_DIRS=/usr/share/xfce4:/usr/share/xfce:/usr/share/gnome:/home/mspring/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop:/usr/share
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: XDG_MENU_PREFIX=xfce-
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: XDG_RUNTIME_DIR=/run/user/24401
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: XDG_SEAT=seat0
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: XDG_SESSION_CLASS=user
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: XDG_SESSION_DESKTOP=xfce
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: XDG_SESSION_ID=2
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: XDG_SESSION_TYPE=x11
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: XDG_VTNR=2
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: XML=/usr/bin/xmlstarlet
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - env: _=/opt/maven/bin/mvn
+[DEBUG] org.codehaus.mojo.exec.ExecMojo - Executing command line: [java, --class-path, /ws/sandbox/java-modules/multi-module-app/appl/target/classes, appl.app.module.org.springdot.forpan.core.App]
+hello multi modules
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - ------------------------------------------------------------------------
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - BUILD SUCCESS
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - ------------------------------------------------------------------------
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - Total time:  0.566 s
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - Finished at: 2024-03-30T11:42:43-07:00
+[INFO] org.apache.maven.cli.event.ExecutionEventLogger - ------------------------------------------------------------------------
+[DEBUG] org.eclipse.aether.internal.impl.synccontext.named.NamedLockFactoryAdapterFactoryImpl - Shutting down adapter factory; available factories [file-lock, rwlock-local, semaphore-local, noop]; available name mappers [discriminating, file-gav, file-hgav, file-static, gav, static]
+[DEBUG] org.eclipse.aether.internal.impl.synccontext.named.NamedLockFactoryAdapterFactoryImpl - Shutting down 'file-lock' factory
+[DEBUG] org.eclipse.aether.internal.impl.synccontext.named.NamedLockFactoryAdapterFactoryImpl - Shutting down 'rwlock-local' factory
+[DEBUG] org.eclipse.aether.internal.impl.synccontext.named.NamedLockFactoryAdapterFactoryImpl - Shutting down 'semaphore-local' factory
+[DEBUG] org.eclipse.aether.internal.impl.synccontext.named.NamedLockFactoryAdapterFactoryImpl - Shutting down 'noop' factory
