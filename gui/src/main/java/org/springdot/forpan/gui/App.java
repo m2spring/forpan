@@ -19,6 +19,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.springdot.forpan.core.Util;
 import org.springdot.forpan.cpanel.api.CPanelAPI;
+import org.springdot.forpan.model.FwModel;
+import org.springdot.forpan.model.FwRecord;
 
 public class App extends Application {
 
@@ -58,52 +60,27 @@ public class App extends Application {
     }
 
     private Control mkTable(){
-        var table = new TableView<ForwarderDetails>();
+        var table = new TableView<FwRecord>();
 
-        var forwarderCol = new TableColumn<ForwarderDetails,String>("Forwarder");
-        var domainCol = new TableColumn<ForwarderDetails,String>("Domain");
-        var targetCol = new TableColumn<ForwarderDetails,String>("Target");
+        var forwarderCol = new TableColumn<FwRecord,String>("Forwarder");
+        var domainCol = new TableColumn<FwRecord,String>("Domain");
+        var targetCol = new TableColumn<FwRecord,String>("Target");
 
-        forwarderCol.setCellValueFactory(new PropertyValueFactory<ForwarderDetails,String>("forwarder"));
-        domainCol.setCellValueFactory(new PropertyValueFactory<ForwarderDetails,String>("domain"));
-        targetCol.setCellValueFactory(new PropertyValueFactory<ForwarderDetails,String>("target"));
+        forwarderCol.setCellValueFactory(new PropertyValueFactory<FwRecord,String>("forwarder"));
+        domainCol.setCellValueFactory(new PropertyValueFactory<FwRecord,String>("domain"));
+        targetCol.setCellValueFactory(new PropertyValueFactory<FwRecord,String>("target"));
 
-        table.setItems(data);
+        FwModel model = FwModel.instance.get();
+        System.out.println("loading model...");
+        model.reload();
+        System.out.println("model loaded");
+        ObservableList<FwRecord> records = FXCollections.observableArrayList(model.getRecords());
+        table.setItems(records);
 
         table.getColumns().addAll(forwarderCol,domainCol,targetCol);
 
         return table;
     }
-
-    public static class ForwarderDetails{
-        public String forwarder;
-        public String domain;
-        public String target;
-
-        ForwarderDetails(String forwarder, String domain, String target){
-            this.forwarder = forwarder;
-            this.domain = domain;
-            this.target = target;
-        }
-
-        public String getForwarder(){
-            return forwarder;
-        }
-
-        public String getDomain(){
-            return domain;
-        }
-
-        public String getTarget(){
-            return target;
-        }
-    }
-
-    private final static ObservableList<ForwarderDetails> data =
-        FXCollections.observableArrayList(
-            new ForwarderDetails("fwd1","domain1","target1"),
-            new ForwarderDetails("fwd2","domain2","target2")
-        );
 
     private void buttonPressed(ActionEvent aev){
         try{

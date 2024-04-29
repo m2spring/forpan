@@ -7,4 +7,5 @@ module org.springdot.forpan.gui {
     requires atlantafx.base;
     requires org.springdot.forpan.core;
     requires org.springdot.forpan.cpanel.api;
+    requires org.springdot.forpan.model;
 }
