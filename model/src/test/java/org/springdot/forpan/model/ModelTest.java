@@ -11,6 +11,6 @@ public class ModelTest{
         showMethod();
 
         FwModel model = FwModel.instance.get();
-        model.reload();
+        model.syncFromServer();
     }
 }
