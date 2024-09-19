@@ -11,13 +11,13 @@ public class FwModel{
 
     private List<FwRecord> records;
 
-    public void reload(){
+    public void syncFromServer(){
         // TODO: incremental update of records
 
         CPanelAPI api = CPanelAPI.mkImpl();
         records = api.getDomains().stream()
-            .flatMap(dmn -> api.getForwarders(dmn).stream())
-            .map(cfwd -> new FwRecord(cfwd))
+            .flatMap(domain -> api.getForwarders(domain).stream())
+            .map(FwRecord::new)
             .toList();
     }
 

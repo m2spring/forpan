@@ -72,7 +72,7 @@ public class App extends Application {
 
         FwModel model = FwModel.instance.get();
         System.out.println("loading model...");
-        model.reload();
+        model.syncFromServer();
         System.out.println("model loaded");
         ObservableList<FwRecord> records = FXCollections.observableArrayList(model.getRecords());
         table.setItems(records);
