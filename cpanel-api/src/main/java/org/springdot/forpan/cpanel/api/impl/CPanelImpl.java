@@ -4,12 +4,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.lang3.StringUtils;
 import org.springdot.forpan.cpanel.api.CPanelAPI;
 import org.springdot.forpan.cpanel.api.CPanelDomain;
 import org.springdot.forpan.cpanel.api.CPanelForwarder;
+import org.springdot.forpan.cpanel.api.CPanelServerException;
 import org.springdot.forpan.util.Lazy;
 
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -106,7 +109,7 @@ public class CPanelImpl implements CPanelAPI{
             .GET()
             .build();
         try{
-            return client.send(req,HttpResponse.BodyHandlers.ofString());
+            return checkStatus(req,client.send(req,HttpResponse.BodyHandlers.ofString()));
         }catch (Exception e){
             throw new RuntimeException(e);
         }
@@ -116,6 +119,12 @@ public class CPanelImpl implements CPanelAPI{
         return HttpRequest.newBuilder()
             .uri(URI.create(endpoint+"/cpsess"+PASS+"/"+path).normalize())
             .build();
+    }
+
+    private HttpResponse checkStatus(HttpRequest req, HttpResponse rsp){
+        int sc = rsp.statusCode();
+        if (sc == HttpURLConnection.HTTP_OK) return rsp;
+        throw new CPanelServerException("\n"+req.method()+" "+req.uri()+"\n"+"status: "+sc+" "+HttpStatus.getStatusText(sc));
     }
 
     private <T> T map(String json, Class<T> type){
