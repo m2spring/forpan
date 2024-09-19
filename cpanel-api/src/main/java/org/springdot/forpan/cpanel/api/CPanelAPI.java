@@ -14,9 +14,7 @@ public interface CPanelAPI{
     List<CPanelForwarder> getForwarders(CPanelDomain domain);
 
     // until we do some real DI
-    public static CPanelAPI mkImpl(){
-        return new CPanelImpl();
+    public static CPanelAPI mkImpl(CPanelAccessDetails ad){
+        return new CPanelImpl(ad);
     }
-
-    CPanelAPI setEndpoint(String endpoint);
 }

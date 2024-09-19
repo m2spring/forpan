@@ -83,7 +83,7 @@ public class ApiTest{
 
     @Test
     public void testListDomainsFromServer() throws Exception{
-        CPanelAPI api = CPanelAPI.mkImpl();
+        CPanelAPI api = getConfiguredAPI();
         if (!api.isConfigured()) return;
         showMethod();
 
@@ -93,7 +93,7 @@ public class ApiTest{
 
     @Test
     public void testListForwardersFromServer() throws Exception{
-        CPanelAPI api = CPanelAPI.mkImpl();
+        CPanelAPI api = getConfiguredAPI();
         if (!api.isConfigured()) return;
         showMethod();
 
@@ -107,7 +107,17 @@ public class ApiTest{
         }
     }
 
-    Lazy<CPanelAPI> api = Lazy.of(() ->
-        CPanelAPI.mkImpl().setEndpoint("http://localhost:"+server.getPort())
+    private Lazy<CPanelAPI> api = Lazy.of(() ->
+        CPanelAPI.mkImpl(
+            new CPanelAccessDetails().setEndpoint("http://localhost:"+server.getPort())
+        )
     );
+
+    private CPanelAPI getConfiguredAPI(){
+        CPanelAccessDetails ad = new CPanelAccessDetails();
+        if (!ad.isConfigured()){
+            System.out.println(ad.getStatus());
+        }
+        return CPanelAPI.mkImpl(ad);
+    }
 }

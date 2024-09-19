@@ -1,6 +1,7 @@
 package org.springdot.forpan.model;
 
 import org.springdot.forpan.cpanel.api.CPanelAPI;
+import org.springdot.forpan.cpanel.api.CPanelAccessDetails;
 import org.springdot.forpan.util.Lazy;
 
 import java.util.List;
@@ -14,11 +15,17 @@ public class FwModel{
     public void syncFromServer(){
         // TODO: incremental update of records
 
-        CPanelAPI api = CPanelAPI.mkImpl();
-        records = api.getDomains().stream()
-            .flatMap(domain -> api.getForwarders(domain).stream())
-            .map(FwRecord::new)
-            .toList();
+        CPanelAccessDetails ad = new CPanelAccessDetails();
+        if (!ad.isConfigured()){
+            // TODO: should log this better
+            System.out.println("[WARNING] CPanelAccessDetails not configured\n"+ad.getStatus());
+        }else{
+            CPanelAPI api = CPanelAPI.mkImpl(ad);
+            records = api.getDomains().stream()
+                .flatMap(domain -> api.getForwarders(domain).stream())
+                .map(FwRecord::new)
+                .toList();
+        }
     }
 
     public List<FwRecord> getRecords(){
