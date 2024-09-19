@@ -19,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.springdot.forpan.core.Util;
 import org.springdot.forpan.cpanel.api.CPanelAPI;
+import org.springdot.forpan.cpanel.api.CPanelAccessDetails;
 import org.springdot.forpan.model.FwModel;
 import org.springdot.forpan.model.FwRecord;
 
@@ -86,7 +87,7 @@ public class App extends Application {
         try{
             System.out.println("button pressed: "+aev+" "+Util.helper());
             System.out.println("Domains:");
-            CPanelAPI.mkImpl().getDomains().stream().forEach(d -> System.out.println(d.name()));
+            CPanelAPI.mkImpl(new CPanelAccessDetails()).getDomains().stream().forEach(d -> System.out.println(d.name()));
         }catch (Exception e){
             e.printStackTrace();
         }

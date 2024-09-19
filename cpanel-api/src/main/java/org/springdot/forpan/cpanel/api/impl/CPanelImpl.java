@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.lang3.StringUtils;
 import org.springdot.forpan.cpanel.api.CPanelAPI;
+import org.springdot.forpan.cpanel.api.CPanelAccessDetails;
 import org.springdot.forpan.cpanel.api.CPanelDomain;
 import org.springdot.forpan.cpanel.api.CPanelForwarder;
 import org.springdot.forpan.cpanel.api.CPanelServerException;
@@ -25,24 +25,15 @@ public class CPanelImpl implements CPanelAPI{
 
     private final static boolean VERBOSE = true;
 
-    // TODO: API endpoint to be configurable
-    private final static String ENDPOINT = "https://box5306.bluehost.com:2083";
-    private final static String USER = System.getenv("CPANEL_USER");
+    private CPanelAccessDetails accessDetails;
 
-    // TODO: token to come from credential file
-    private final static String PASS = System.getenv("CPANEL_PASS");
-
-    private String endpoint = ENDPOINT;
-
-    @Override
-    public CPanelAPI setEndpoint(String endpoint){
-        this.endpoint = endpoint;
-        return this;
+    public CPanelImpl(CPanelAccessDetails ad){
+        this.accessDetails = ad;
     }
 
     @Override
     public boolean isConfigured(){
-        return !(StringUtils.isBlank(USER) || StringUtils.isBlank(PASS));
+        return accessDetails.isConfigured();
     }
 
     @Override
@@ -51,7 +42,7 @@ public class CPanelImpl implements CPanelAPI{
             .followRedirects(HttpClient.Redirect.NORMAL)
             .build();
         var request = HttpRequest.newBuilder()
-            .uri(URI.create(endpoint))
+            .uri(URI.create(accessDetails.getEndpoint()))
             .GET()
             .build();
         HttpResponse<String> rsp = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -104,8 +95,8 @@ public class CPanelImpl implements CPanelAPI{
             .followRedirects(HttpClient.Redirect.NORMAL)
             .build();
         var req = HttpRequest.newBuilder()
-            .uri(URI.create(endpoint+"/"+path).normalize())
-            .header("Authorization","cpanel "+USER+":"+PASS)
+            .uri(URI.create(accessDetails.getEndpoint()+"/"+path).normalize())
+            .header("Authorization","cpanel "+accessDetails.getUser()+":"+accessDetails.getPass())
             .GET()
             .build();
         try{
@@ -117,14 +108,14 @@ public class CPanelImpl implements CPanelAPI{
 
     private HttpRequest mkReq(String path){
         return HttpRequest.newBuilder()
-            .uri(URI.create(endpoint+"/cpsess"+PASS+"/"+path).normalize())
+            .uri(URI.create(accessDetails.getEndpoint()+"/cpsess"+accessDetails.getPass()+"/"+path).normalize())
             .build();
     }
 
     private HttpResponse checkStatus(HttpRequest req, HttpResponse rsp){
         int sc = rsp.statusCode();
         if (sc == HttpURLConnection.HTTP_OK) return rsp;
-        throw new CPanelServerException("\n"+req.method()+" "+req.uri()+"\n"+"status: "+sc+" "+HttpStatus.getStatusText(sc));
+        throw new CPanelServerException("\n"+req.method()+" "+req.uri()+"\nstatus: "+sc);
     }
 
     private <T> T map(String json, Class<T> type){
