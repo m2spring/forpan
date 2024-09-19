@@ -3,7 +3,6 @@ module org.springdot.forpan.cpanel.api {
     requires java.net.http;
     requires jdk.crypto.ec;
     requires org.apache.commons.lang3;
-    requires commons.httpclient;
     requires com.fasterxml.jackson.databind;
     requires transitive org.springdot.forpan.util;
     exports org.springdot.forpan.cpanel.api;
