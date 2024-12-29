@@ -11,6 +11,11 @@ public class FwRecord{
         this.target = cpf.target();
     }
 
+    FwRecord(String forwarder, String target){
+        this.forwarder = forwarder;
+        this.target = target;
+    }
+
     public String getForwarder(){
         return forwarder;
     }
@@ -25,5 +30,10 @@ public class FwRecord{
             if (p > -1) return forwarder.substring(p+1);
         }
         return null;
+    }
+
+    @Override
+    public String toString(){
+        return "new FwRecord(\""+forwarder+"\",\""+target+"\"),";
     }
 }

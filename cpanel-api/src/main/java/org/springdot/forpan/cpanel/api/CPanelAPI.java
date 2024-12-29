@@ -12,6 +12,8 @@ public interface CPanelAPI{
 
     List<CPanelDomain> getDomains();
     List<CPanelForwarder> getForwarders(CPanelDomain domain);
+    CPanelForwarder addForwarder(CPanelForwarder forwarder);
+    void delForwarder(CPanelForwarder forwarder);
 
     // until we do some real DI
     public static CPanelAPI mkImpl(CPanelAccessDetails ad){

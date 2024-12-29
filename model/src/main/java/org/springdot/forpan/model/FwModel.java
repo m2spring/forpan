@@ -1,34 +1,20 @@
 package org.springdot.forpan.model;
 
-import org.springdot.forpan.cpanel.api.CPanelAPI;
-import org.springdot.forpan.cpanel.api.CPanelAccessDetails;
-import org.springdot.forpan.util.Lazy;
+import org.springdot.forpan.cpanel.api.CPanelDomain;
+import org.springdot.forpan.cpanel.api.CPanelForwarder;
 
 import java.util.List;
 
-public class FwModel{
+public interface FwModel{
+    void syncFromServer();
+    List<CPanelDomain> getDomains();
+    List<FwRecord> getRecords();
+    void addForwarder(String forwarder, CPanelDomain domain, String target);
+    void delForwarder(FwRecord rec);
 
-    public static Lazy<FwModel> instance = Lazy.of(() -> new FwModel());
-
-    private List<FwRecord> records;
-
-    public void syncFromServer(){
-        // TODO: incremental update of records
-
-        CPanelAccessDetails ad = new CPanelAccessDetails();
-        if (!ad.isConfigured()){
-            // TODO: should log this better
-            System.out.println("[WARNING] CPanelAccessDetails not configured\n"+ad.getStatus());
-        }else{
-            CPanelAPI api = CPanelAPI.mkImpl(ad);
-            records = api.getDomains().stream()
-                .flatMap(domain -> api.getForwarders(domain).stream())
-                .map(FwRecord::new)
-                .toList();
-        }
-    }
-
-    public List<FwRecord> getRecords(){
-        return records;
+    static FwModel getInstance(){
+        return (System.getenv("CPANEL_ENDPOINT") != null)
+            ? new RemoteModel()
+            : new DummyModel();
     }
 }
