@@ -10,7 +10,7 @@ public class ModelTest{
     public void testReload() throws Exception{
         showMethod();
 
-        FwModel model = FwModel.instance.get();
+        FwModel model = FwModel.getInstance();
         model.syncFromServer();
     }
 }
