@@ -24,12 +24,13 @@ import java.util.stream.Stream;
 
 public class CPanelImpl implements CPanelAPI{
 
-    private final static boolean VERBOSE = true;
-
     private CPanelAccessDetails accessDetails;
+    private boolean verbose = false;
 
     public CPanelImpl(CPanelAccessDetails ad){
         this.accessDetails = ad;
+        // TODO: have a real logging system
+        verbose = !StringUtils.isBlank(System.getProperty("jdk.httpclient.HttpClient.log"));
     }
 
     @Override
@@ -86,7 +87,6 @@ public class CPanelImpl implements CPanelAPI{
 
     @Override
     public List<CPanelForwarder> getForwarders(CPanelDomain domain){
-        System.out.println("CPanelImpl.Forwarders: "+System.getProperty("jdk.httpclient.HttpClient.log"));
         HttpResponse<String> rsp = doGet("execute/Email/list_forwarders?domain="+domain.name());
         return Arrays.stream(map(rsp.body(),ForwarderResult.class).data)
             .map(ForwarderResult.Data::mkForwarder)
@@ -156,7 +156,7 @@ public class CPanelImpl implements CPanelAPI{
     }
 
     private HttpResponse<String> doGet(String path){
-        if (VERBOSE) System.out.println("url: "+path);
+        if (verbose) System.out.println("url: "+path);
         var client = HttpClient.newBuilder()
             .followRedirects(HttpClient.Redirect.NORMAL)
             .build();
@@ -167,7 +167,7 @@ public class CPanelImpl implements CPanelAPI{
             .build();
         try{
             HttpResponse rsp = checkStatus(req, client.send(req, HttpResponse.BodyHandlers.ofString()));
-            if (VERBOSE) System.out.println("<body>\n"+StringUtils.trim(""+rsp.body())+"\n</body>");
+            if (verbose) System.out.println("<body>\n"+StringUtils.trim(""+rsp.body())+"\n</body>");
             return rsp;
         }catch (Exception e){
             throw new RuntimeException(e+"\npath: "+path);
