@@ -1,7 +1,7 @@
 package org.springdot.forpan.model;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springdot.forpan.cpanel.api.CPanelDomain;
-import org.springdot.forpan.cpanel.api.CPanelForwarder;
 
 import java.util.List;
 
@@ -13,8 +13,8 @@ public interface FwModel{
     void delForwarder(FwRecord rec);
 
     static FwModel getInstance(){
-        return (System.getenv("CPANEL_ENDPOINT") != null)
-            ? new RemoteModel()
-            : new DummyModel();
+        return (StringUtils.equals("true",System.getenv("FORPAN_DUMMY_MODEL")))
+               ? new DummyModel()
+               : new RemoteModel();
     }
 }
