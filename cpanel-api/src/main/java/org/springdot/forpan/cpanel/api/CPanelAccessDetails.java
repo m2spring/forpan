@@ -2,43 +2,56 @@ package org.springdot.forpan.cpanel.api;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class CPanelAccessDetails{
 
+    private final static String CONFIG_PROPS_FILE = ".forpan/config.properties";
 
-    private final static String ENDPOINT = "CPANEL_ENDPOINT";
-    private final static String USER = "CPANEL_USER";
-    private final static String PASS = "CPANEL_PASS";
+    private final static String ENDPOINT = "cpanel.endpoint";
+    private final static String USER = "cpanel.user";
+    private final static String PASS = "cpanel.pass";
 
-    private final static String[] VARNAMES = {ENDPOINT,USER,PASS};
-
-    private Map<String,String> values = new HashMap<>();
+    private Properties config;
 
     public CPanelAccessDetails(){
-        for (String vn : VARNAMES){
-            values.put(vn,System.getenv(vn));
+        config = new Properties();
+        File fn = new File(System.getProperty("user.home"),CONFIG_PROPS_FILE);
+        if (fn.exists()){
+            System.out.println("loading config from "+fn);
+            try{
+                config.load(new FileInputStream(fn));
+            }catch (IOException e){
+                throw new RuntimeException("while trying to load "+fn,e);
+            }
+        }
+
+        for (String pn : config.stringPropertyNames()){
+            String val = System.getenv(pn.toUpperCase().replace('.','_'));
+            if (val != null) config.put(pn,val);
         }
     }
 
     public CPanelAccessDetails setEndpoint(String ep){
-        values.put(ENDPOINT,ep);
+        config.put(ENDPOINT,ep);
         return this;
     }
 
     public String getEndpoint(){
-        return values.get(ENDPOINT);
+        return get(ENDPOINT);
     }
 
     public String getUser(){
-        return values.get(USER);
+        return get(USER);
     }
 
     public String getPass(){
-        return values.get(PASS);
+        return get(PASS);
     }
 
     public boolean isConfigured(){
@@ -49,12 +62,17 @@ public class CPanelAccessDetails{
         return getStatus(ENDPOINT,USER,PASS);
     }
 
-    private static String getStatus(String... vns){
-        return Arrays.stream(vns)
-            .map(vn -> {
-                var val = System.getenv(vn);
-                return vn+": "
-                    +(StringUtils.isBlank(val)? "missing" : (PASS.equals(vn)? "*****" : val));
+    private String get(String pn){
+        Object val = config.get(pn);
+        return val == null? null : ""+val;
+    }
+
+    private String getStatus(String... pns){
+        return Arrays.stream(pns)
+            .map(pn -> {
+                var val = get(pn);
+                return pn+": "
+                    +(StringUtils.isBlank(val)? "missing" : (PASS.equals(pn)? "*****" : val));
             })
             .collect(Collectors.joining("\n"));
     }
