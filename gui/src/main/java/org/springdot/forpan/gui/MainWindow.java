@@ -95,6 +95,8 @@ class MainWindow{
             addRecord(null);
         }else if (Common.KEY_CONTROL_D.match(ev) || Common.KEY_DELETE.match(ev)){
             delRecord(null);
+        }else if (Common.KEY_CONTROL_C.match(ev)){
+            copyRecord();
         }
     }
 
@@ -174,5 +176,14 @@ class MainWindow{
             if (currIdx > size) currIdx = size-1;
             table.getSelectionModel().select(currIdx);
         }
+    }
+
+    private void copyRecord(){
+        FwRecord currFwdr = getSelectedForwarder();
+        if (currFwdr == null) return;
+
+        String fwdr = currFwdr.getForwarder();
+        Common.copyToClipboard(fwdr);
+        setStatus("copied "+fwdr+" to clipboard");
     }
 }
