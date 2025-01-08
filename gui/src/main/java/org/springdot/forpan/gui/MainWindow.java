@@ -1,5 +1,7 @@
 package org.springdot.forpan.gui;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,6 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.springdot.forpan.model.FwRecord;
 
 import java.util.List;
@@ -80,8 +83,19 @@ class MainWindow{
         table.requestFocus();
     }
 
-    void setStatus(String msg){
+    private Timeline activeStatusTimeline = null;
+
+    synchronized void setStatus(String msg){
+        if (activeStatusTimeline != null) activeStatusTimeline.stop();
+
         Platform.runLater(() -> status.setText(msg));
+
+        activeStatusTimeline = new Timeline(new KeyFrame(Duration.seconds(3), e -> {
+            status.clear();
+            activeStatusTimeline = null;
+        }));
+        activeStatusTimeline.setCycleCount(1);
+        activeStatusTimeline.play();
     }
 
     private void handleKey(KeyEvent ev){
