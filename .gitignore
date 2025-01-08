@@ -19,6 +19,6 @@ mvn.out*
 *.old.key
 .*.json
 dependency-reduced-pom.xml
-deploy-to-*.sh
+deploy*.sh
 log
 env
