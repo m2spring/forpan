@@ -6,7 +6,7 @@ nc=${JAVA_HOME:=/opt/jdk21}
 export JAVA_HOME
 export PATH=$JAVA_HOME/bin:$PATH
 
-nc=${MAVEN_HOME:=/opt/apache-maven-3.9.6}
+nc=${MAVEN_HOME:=/opt/apache-maven-3.9.9}
 export MAVEN_HOME
 
 if [ -t 1 ]; then 
