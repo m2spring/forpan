@@ -78,7 +78,7 @@ class MainWindow{
         scene.setOnKeyPressed(this::handleKey);
 
         stage.setScene(scene);
-        stage.setX(4000);
+        //stage.setX(4000);
         stage.show();
         table.requestFocus();
     }
