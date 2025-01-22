@@ -1,5 +1,6 @@
 package org.springdot.forpan.gui;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -16,11 +17,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.StringUtils;
 import org.springdot.forpan.cpanel.api.CPanelDomain;
 
 class AddRecWin{
     private Env env;
     private Stage primaryStage;
+    private Memo memo;
     private Stage dialog;
     private ComboBox<CPanelDomain> domainSelector;
     private TextField forwarderField;
@@ -29,6 +32,7 @@ class AddRecWin{
     public AddRecWin(Env env, Stage primaryStage){
         this.env = env;
         this.primaryStage = primaryStage;
+        this.memo = Memo.load();
     }
 
     void show(){
@@ -48,7 +52,7 @@ class AddRecWin{
         }
         domainSelector = new ComboBox<>();
         domainSelector.getItems().addAll(env.model.getDomains());
-        domainSelector.getSelectionModel().selectFirst();
+        preSelectDomain();
         grid.add(domainSelector,1,0);
 
         {
@@ -65,6 +69,7 @@ class AddRecWin{
             grid.add(lbl,0,2);
         }
         targetField = new TextField();
+        targetField.setText(memo.target);
         grid.add(targetField,1,2);
 
         var buttons = new HBox();
@@ -112,13 +117,30 @@ class AddRecWin{
             dialog.setY(y - dialog.getHeight()/2d);
         });
 
+        forwarderField.requestFocus();
         dialog.show();
+    }
+
+    private void preSelectDomain(){
+        ObservableList<CPanelDomain> items = domainSelector.getItems();
+        for (int i=0, n=items.size(); i<n; i++){
+            CPanelDomain cPanelDomain = items.get(i);
+            if (StringUtils.equals(memo.domain,cPanelDomain.name())){
+                domainSelector.getSelectionModel().select(i);
+                return;
+            }
+        }
+        domainSelector.getSelectionModel().selectFirst();
     }
 
     private void add(ActionEvent ev){
         String fwdr = forwarderField.getText();
         CPanelDomain dmn = domainSelector.getValue();
-        env.model.addForwarder(fwdr,dmn,targetField.getText());
+        String trgt = targetField.getText();
+        env.model.addForwarder(fwdr,dmn,trgt);
+        memo.domain = dmn.name();
+        memo.target = trgt;
+        memo.save();
         dialog.close();
         env.mainWindow.refreshTable();
 
