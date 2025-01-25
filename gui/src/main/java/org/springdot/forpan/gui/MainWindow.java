@@ -93,9 +93,7 @@ class MainWindow{
                     if (Common.KEY_CURSOR_DN.match(ev)) table.requestFocus();
                 });
                 searchField.textProperty().addListener((observable,oldVal,newVal) -> {
-                    filteredRecs.setPredicate(rec ->
-                        StringUtils.containsIgnoreCase(rec.getForwarder(),newVal)
-                    );
+                    setFilterPredicate(newVal);
                 });
                 c.add(searchField);
             }
@@ -181,7 +179,9 @@ class MainWindow{
         List<FwRecord> recs = env.model.getRecords();
         setStatus("model loaded ("+recs.size()+")");
 
-        filteredRecs = new FilteredList<>(FXCollections.observableArrayList(recs), p -> true);
+        filteredRecs = new FilteredList<>(FXCollections.observableArrayList(recs));
+        setFilterPredicate(searchField.getText());
+
         SortedList<FwRecord> sortedRecs = new SortedList<>(filteredRecs);
         table.setItems(sortedRecs);
         sortedRecs.comparatorProperty().bind(table.comparatorProperty());
@@ -193,6 +193,12 @@ class MainWindow{
             table.getSelectionModel().select(0);
             Platform.runLater(() -> table.scrollTo(0));
         }
+    }
+
+    private void setFilterPredicate(String searchStr){
+        filteredRecs.setPredicate(rec ->
+            StringUtils.containsIgnoreCase(rec.getForwarder(),searchStr)
+        );
     }
 
     void gotoForwarderByName(String fwdr){
