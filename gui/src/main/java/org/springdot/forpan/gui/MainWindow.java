@@ -1,27 +1,37 @@
 package org.springdot.forpan.gui;
 
+import atlantafx.base.controls.CustomTextField;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
+import javafx.scene.control.IndexedCell;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.skin.TableViewSkin;
+import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.apache.commons.lang3.StringUtils;
+import org.kordamp.ikonli.javafx.FontIcon;
+import org.kordamp.ikonli.material2.Material2MZ;
 import org.springdot.forpan.model.FwRecord;
 
 import java.util.List;
@@ -31,8 +41,10 @@ class MainWindow{
 
     private Env env;
     private Stage stage;
+    private FilteredList<FwRecord> filteredRecs;
     private TableView<FwRecord> table;
-    private TextField status;
+    private TextField statusField;
+    private CustomTextField searchField;
 
     public MainWindow(Env env, Stage stage){
         this.env = env;
@@ -42,7 +54,7 @@ class MainWindow{
     void show(){
         stage.setTitle("Forpan");
 
-        status = new TextField();
+        statusField = new TextField();
 //        status.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
 
         var toolbar = new HBox();
@@ -67,12 +79,31 @@ class MainWindow{
                 b.setOnAction(this::delRecord);
                 c.add(b);
             }
+            {
+                var r = new Region();
+                HBox.setHgrow(r,Priority.ALWAYS);
+                c.add(r);
+            }
+            {
+                searchField = new CustomTextField();
+                searchField.setLeft(new FontIcon(Material2MZ.SEARCH));
+                searchField.setPromptText("Search (Ctrl-F)...");
+                searchField.setOnKeyPressed(ev -> {
+                    if (Common.KEY_CURSOR_DN.match(ev)) table.requestFocus();
+                });
+                searchField.textProperty().addListener((observable,oldVal,newVal) -> {
+                    filteredRecs.setPredicate(rec ->
+                        StringUtils.containsIgnoreCase(rec.getForwarder(),newVal)
+                    );
+                });
+                c.add(searchField);
+            }
         }
 
         var bp = new BorderPane();
         bp.setTop(toolbar);
         bp.setCenter(mkTable());
-        bp.setBottom(status);
+        bp.setBottom(statusField);
 
         var scene = new Scene(bp,800,600);
         scene.setOnKeyPressed(this::handleKey);
@@ -88,10 +119,10 @@ class MainWindow{
     synchronized void setStatus(String msg){
         if (activeStatusTimeline != null) activeStatusTimeline.stop();
 
-        Platform.runLater(() -> status.setText(msg));
+        Platform.runLater(() -> statusField.setText(msg));
 
         activeStatusTimeline = new Timeline(new KeyFrame(Duration.seconds(3), e -> {
-            status.clear();
+            statusField.clear();
             activeStatusTimeline = null;
         }));
         activeStatusTimeline.setCycleCount(1);
@@ -99,7 +130,7 @@ class MainWindow{
     }
 
     private void handleKey(KeyEvent ev){
-        if (Common.KEY_CONTROL_Q.match(ev) || Common.KEY_ESC.match(ev)){
+        if (Common.KEY_CONTROL_Q.match(ev)){
             System.out.println("exit");
             Platform.exit();
             System.exit(0);
@@ -111,6 +142,12 @@ class MainWindow{
             delRecord(null);
         }else if (Common.KEY_CONTROL_C.match(ev)){
             copyRecord();
+        }else if (Common.KEY_CONTROL_F.match(ev)){
+            searchField.requestFocus();
+        }else if (Common.KEY_ESC.match(ev)){
+            searchField.clear();
+            ensureSelectedRowIsVisible();
+            table.requestFocus();
         }
     }
 
@@ -127,7 +164,11 @@ class MainWindow{
         trgtCol.prefWidthProperty().bind(table.widthProperty().multiply(0.3));
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
         table.getColumns().addAll(fwdrCol,trgtCol);
-
+        table.getSelectionModel().selectedItemProperty().addListener((observable,oldVal,newVal) -> {
+            if (newVal == null && !table.getItems().isEmpty()){
+                table.getSelectionModel().select(0);
+            }
+        });
         return table;
     }
 
@@ -138,7 +179,10 @@ class MainWindow{
         env.model.syncFromServer();
         List<FwRecord> recs = env.model.getRecords();
         setStatus("model loaded ("+recs.size()+")");
-        table.setItems(FXCollections.observableArrayList(recs));
+
+        filteredRecs = new FilteredList<>(FXCollections.observableArrayList(recs), p -> true);
+        table.setItems(filteredRecs);
+
         sortState.apply(table);
         if (currFwdr != null){
             gotoForwarderByName(currFwdr.getForwarder());
@@ -154,12 +198,40 @@ class MainWindow{
             FwRecord rec = recs.get(i);
             if (fwdr.equalsIgnoreCase(rec.getForwarder())){
                 table.getSelectionModel().clearSelection();
-                table.getSelectionModel().select(i);
-                table.scrollTo(i);
+                selectRow(i);
                 table.requestFocus();
                 return;
             }
         }
+    }
+
+    private void ensureSelectedRowIsVisible(){
+        if (table.getItems().isEmpty()) return;
+
+        TableView.TableViewSelectionModel<FwRecord> sm = table.getSelectionModel();
+        selectRow(sm.getSelectedItems().isEmpty()? 0 : sm.getSelectedIndex());
+    }
+
+    private void selectRow(int idx){
+        if (table.getItems().isEmpty()) return;
+
+        table.getSelectionModel().select(idx);
+        if (table.getSkin() instanceof TableViewSkin<?> skin){
+            VirtualFlow<?> flow = (VirtualFlow<?>)skin.getChildren().stream()
+                .filter(node -> node instanceof VirtualFlow)
+                .findFirst()
+                .orElse(null);
+            if (flow != null){
+                IndexedCell first = flow.getFirstVisibleCell();
+                IndexedCell last = flow.getLastVisibleCell();
+                if (first != null && last != null && first.getIndex() <= idx && idx <= last.getIndex()){
+                    // idx-th row is visible, nothing to scroll
+                    return;
+                }
+            }
+        }
+
+        table.scrollTo(idx);
     }
 
     private FwRecord getSelectedForwarder(){
