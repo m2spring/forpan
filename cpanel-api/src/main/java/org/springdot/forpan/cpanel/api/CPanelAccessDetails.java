@@ -1,17 +1,13 @@
 package org.springdot.forpan.cpanel.api;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springdot.forpan.config.ForpanConfig;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class CPanelAccessDetails{
-
-    private final static String CONFIG_PROPS_FILE = ".forpan/config.properties";
 
     private final static String ENDPOINT = "cpanel.endpoint";
     private final static String USER = "cpanel.user";
@@ -20,17 +16,7 @@ public class CPanelAccessDetails{
     private Properties config;
 
     public CPanelAccessDetails(){
-        config = new Properties();
-        File fn = new File(System.getProperty("user.home"),CONFIG_PROPS_FILE);
-        if (fn.exists()){
-            System.out.println("loading config from "+fn);
-            try{
-                config.load(new FileInputStream(fn));
-            }catch (IOException e){
-                throw new RuntimeException("while trying to load "+fn,e);
-            }
-        }
-
+        config = ForpanConfig.getProperties();
         for (String pn : config.stringPropertyNames()){
             String val = System.getenv(pn.toUpperCase().replace('.','_'));
             if (val != null) config.put(pn,val);

@@ -25,6 +25,7 @@
 
   <modules>
     <module>util</module>
+    <module>config</module>
     <module>model</module>
     <module>core</module>
     <module>cli</module>
