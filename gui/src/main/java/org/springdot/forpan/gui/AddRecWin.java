@@ -18,7 +18,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
+import org.springdot.forpan.config.ForpanConfig;
 import org.springdot.forpan.cpanel.api.CPanelDomain;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 class AddRecWin{
     private Env env;
@@ -60,8 +64,15 @@ class AddRecWin{
             GridPane.setHalignment(lbl,HPos.RIGHT);
             grid.add(lbl,0,1);
         }
-        forwarderField = new TextField();
-        grid.add(forwarderField,1,1);
+
+        {
+            forwarderField = new TextField();
+            grid.add(forwarderField,1,1);
+            String ip = ForpanConfig.getForwarderInitPattern();
+            if (!StringUtils.isBlank(ip)){
+                forwarderField.setText(new SimpleDateFormat(ip).format(new Date()));
+            }
+        }
 
         {
             Label lbl = new Label("Target:");
