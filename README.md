@@ -1,6 +1,6 @@
 # ForPan - Manage cPanel Email Forwarders
 
-## Overview
+## 1. Overview
 
 [Email forwarders](https://en.wikipedia.org/wiki/Email_forwarding)
 are a great way to curb spam by using them as [disposible email addresses](https://en.wikipedia.org/wiki/Disposable_email_address).
@@ -13,7 +13,7 @@ It interacts with the API of the cPanel service to retrieve all forwarders, to a
 While a typical cPanel service installation has its a web-based UI to manage forwarders (among other things),
 ForPan makes this more convenient for users who want to do this while sitting in front of their computer.  
 
-## Installation
+## 2. Installation
 
 Requirements
 * JDK 21 (get an OpenJDK from [Adoptium](https://adoptium.net/))
@@ -23,9 +23,14 @@ Make sure environment variables `JAVA_HOME` and `MAVEN_HOME` are set accordingly
 
 Build the project via the `build.sh` script. It's also meant to be called by a CI system.
 
-## Configuration
+## 3. Configuration
 
-If you want ForPan to talk to your cPanel service, create a file `~/.forpan/config.properties`
+ForPan makes use of a [Java properties](https://en.wikipedia.org/wiki/.properties)
+file  `~/.forpan/config.properties` for holding configuration values.
+
+### cPanel API
+
+If you want ForPan to talk to your cPanel service, define these properties:
 
 ```
 cpanel.endpoint=
@@ -39,7 +44,15 @@ cpanel.pass=
 * `cpanel.user` user ID to make calls
 * `cpanel.pass` API token created with cPanel
 
-## Usage
+### UI
+
+To prepopulate a new forwarder with a date/time stamp, define a propery `forwarder.init.pattern=`
+with a value following the syntax of [SimpleDateFormat](https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html).
+
+E.g. with `forwarder.init.pattern=yyMMDD` the forwarder field is initialized
+with the current date.
+
+## 4. Usage
 
 Wrapper script `./run.sh` to run the built app.
 
