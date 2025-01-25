@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -181,7 +182,9 @@ class MainWindow{
         setStatus("model loaded ("+recs.size()+")");
 
         filteredRecs = new FilteredList<>(FXCollections.observableArrayList(recs), p -> true);
-        table.setItems(filteredRecs);
+        SortedList<FwRecord> sortedRecs = new SortedList<>(filteredRecs);
+        table.setItems(sortedRecs);
+        sortedRecs.comparatorProperty().bind(table.comparatorProperty());
 
         sortState.apply(table);
         if (currFwdr != null){
