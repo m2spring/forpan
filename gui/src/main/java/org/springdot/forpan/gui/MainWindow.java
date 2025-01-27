@@ -38,6 +38,8 @@ import org.springdot.forpan.model.FwRecord;
 import java.util.List;
 import java.util.Optional;
 
+import static org.springdot.forpan.util.Util.callIfIntPropertyIsSet;
+
 class MainWindow{
 
     private Env env;
@@ -108,7 +110,8 @@ class MainWindow{
         scene.setOnKeyPressed(this::handleKey);
 
         stage.setScene(scene);
-        //stage.setX(4000);
+        callIfIntPropertyIsSet("window.x", v -> stage.setX(v));
+        callIfIntPropertyIsSet("window.y", v -> stage.setY(v));
         stage.show();
         table.requestFocus();
     }
