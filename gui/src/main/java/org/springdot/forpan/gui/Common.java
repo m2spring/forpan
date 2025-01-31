@@ -6,6 +6,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 
+import java.util.regex.Pattern;
+
 import static javafx.scene.input.KeyCombination.CONTROL_DOWN;
 
 class Common{
@@ -26,4 +28,8 @@ class Common{
         cbc.putString(content);
         Clipboard.getSystemClipboard().setContent(cbc);
     }
+
+    final static Pattern EMAIL_ADDRESS_PATTERN = Pattern.compile(
+        "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$"
+    );
 }
