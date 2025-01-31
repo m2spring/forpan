@@ -70,6 +70,6 @@ Shows all forwarders with their respective target address.
 
 ![add](screenshots/add.png)
 
-### Add Forwarder
+### Delete Forwarder
 
 ![delete](screenshots/delete.png)
