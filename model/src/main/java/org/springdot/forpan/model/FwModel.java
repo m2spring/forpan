@@ -12,6 +12,13 @@ public interface FwModel{
     void addForwarder(String forwarder, CPanelDomain domain, String target);
     void delForwarder(FwRecord rec);
 
+    default boolean containsForwarder(String forwarder){
+        for (FwRecord rec : getRecords()){
+            if (StringUtils.equalsAnyIgnoreCase(forwarder,rec.getForwarder())) return true;
+        }
+        return false;
+    }
+
     static FwModel getInstance(){
         return (StringUtils.equals("true",System.getenv("FORPAN_DUMMY_MODEL")))
                ? new DummyModel()

@@ -2,13 +2,11 @@ package org.springdot.forpan.gui;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -23,15 +21,19 @@ import org.springdot.forpan.cpanel.api.CPanelDomain;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static org.springdot.forpan.gui.Common.EMAIL_ADDRESS_PATTERN;
 
 class AddRecWin{
     private Env env;
     private Stage primaryStage;
     private Memo memo;
     private Stage dialog;
-    private ComboBox<CPanelDomain> domainSelector;
-    private TextField forwarderField;
-    private TextField targetField;
+    private FormAttr<ComboBox<CPanelDomain>> domainAttr;
+    private FormAttr<TextField> forwarderAttr;
+    private FormAttr<TextField> targetAttr;
+    private Button okButton;
 
     public AddRecWin(Env env, Stage primaryStage){
         this.env = env;
@@ -47,61 +49,71 @@ class AddRecWin{
         var grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(8);
-        grid.setVgap(8);
+
+        // TODO: have a more generic "form of attribute" notion
+        AtomicInteger row = new AtomicInteger();
 
         {
-            var lbl = new Label("Domain:");
-            GridPane.setHalignment(lbl,HPos.RIGHT);
-            grid.add(lbl,0,0);
-        }
-        domainSelector = new ComboBox<>();
-        domainSelector.getItems().addAll(env.model.getDomains());
-        preSelectDomain();
-        grid.add(domainSelector,1,0);
-
-        {
-            Label lbl = new Label("Forwarder:");
-            GridPane.setHalignment(lbl,HPos.RIGHT);
-            grid.add(lbl,0,1);
+            var combo = new ComboBox<CPanelDomain>();
+            domainAttr = new FormAttr(grid,"Domain",combo,row);
+            combo.getItems().addAll(env.model.getDomains());
+            preSelectDomain();
         }
 
         {
-            forwarderField = new TextField();
-            grid.add(forwarderField,1,1);
+            forwarderAttr = new FormAttr<>(grid,"Forwarder",new TextField(),row)
+                .setValidator(attr -> {
+                    String fwdr = attr.field.getText()+"@"+domainAttr.field.getValue();
+                    if (!EMAIL_ADDRESS_PATTERN.matcher(fwdr).matches()){
+                        throw new AttrValidationErrorException("invalid forwarder username");
+                    }
+                    if (env.model.containsForwarder(fwdr)){
+                        throw new AttrValidationErrorException("forwarder already exists");
+                    }
+                });
             String ip = ForpanConfig.getForwarderInitPattern();
             if (!StringUtils.isBlank(ip)){
-                forwarderField.setText(new SimpleDateFormat(ip).format(new Date()));
+                forwarderAttr.field.setText(new SimpleDateFormat(ip).format(new Date()));
             }
         }
 
         {
-            Label lbl = new Label("Target:");
-            GridPane.setHalignment(lbl,HPos.RIGHT);
-            grid.add(lbl,0,2);
+            targetAttr = new FormAttr<>(grid,"Target",new TextField(),row)
+                .setValidator(attr -> {
+                    if (!EMAIL_ADDRESS_PATTERN.matcher(attr.field.getText()).matches()){
+                        throw new AttrValidationErrorException("invalid email address");
+                    }
+                });
+            targetAttr.field.setText(memo.target);
         }
-        targetField = new TextField();
-        targetField.setText(memo.target);
-        grid.add(targetField,1,2);
 
-        var buttons = new HBox();
-        buttons.setSpacing(10);
-        buttons.setAlignment(Pos.CENTER_RIGHT);
         {
-            var c = buttons.getChildren();
+            var buttons = new HBox();
+            buttons.setSpacing(10);
+            buttons.setAlignment(Pos.CENTER_RIGHT);
             {
-                var b = new Button("Cancel");
-                b.setOnAction(ev -> dialog.close());
-                c.add(b);
+                var c = buttons.getChildren();
+                {
+                    var b = new Button("Cancel");
+                    b.setOnAction(ev -> dialog.close());
+                    c.add(b);
+                }
+                {
+                    okButton = new Button("OK");
+                    okButton.setBackground(new Background(new BackgroundFill(Color.GREEN,null,null)));
+                    okButton.setOnAction(this::add);
+                    c.add(okButton);
+                }
             }
-            {
-                Button b = new Button("OK");
-                b.setBackground(new Background(new BackgroundFill(Color.GREEN,null,null)));
-                b.setOnAction(this::add);
-                c.add(b);
-            }
+
+            grid.add(buttons,1,row.get());
+
+            row.incrementAndGet();
         }
 
-        grid.add(buttons,1,3);
+        new Form(domainAttr,forwarderAttr,targetAttr).setValidator(nofErrAttrs -> {
+            okButton.setDisable(nofErrAttrs > 0);
+        });
 
         var bp = new BorderPane();
         bp.setCenter(grid);
@@ -128,26 +140,28 @@ class AddRecWin{
             dialog.setY(y - dialog.getHeight()/2d);
         });
 
-        forwarderField.requestFocus();
+        forwarderAttr.field.requestFocus();
         dialog.show();
     }
 
     private void preSelectDomain(){
-        ObservableList<CPanelDomain> items = domainSelector.getItems();
+        ObservableList<CPanelDomain> items = domainAttr.field.getItems();
         for (int i=0, n=items.size(); i<n; i++){
             CPanelDomain cPanelDomain = items.get(i);
             if (StringUtils.equals(memo.domain,cPanelDomain.name())){
-                domainSelector.getSelectionModel().select(i);
+                domainAttr.field.getSelectionModel().select(i);
                 return;
             }
         }
-        domainSelector.getSelectionModel().selectFirst();
+        domainAttr.field.getSelectionModel().selectFirst();
     }
 
     private void add(ActionEvent ev){
-        String fwdr = forwarderField.getText();
-        CPanelDomain dmn = domainSelector.getValue();
-        String trgt = targetField.getText();
+        if (okButton.isDisabled()) return;
+
+        String fwdr = forwarderAttr.field.getText();
+        CPanelDomain dmn = domainAttr.field.getValue();
+        String trgt = targetAttr.field.getText();
         env.model.addForwarder(fwdr,dmn,trgt);
         memo.domain = dmn.name();
         memo.target = trgt;

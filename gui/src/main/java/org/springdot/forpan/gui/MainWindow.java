@@ -110,8 +110,8 @@ class MainWindow{
         scene.setOnKeyPressed(this::handleKey);
 
         stage.setScene(scene);
-        callIfIntPropertyIsSet("window.x", v -> stage.setX(v));
-        callIfIntPropertyIsSet("window.y", v -> stage.setY(v));
+        callIfIntPropertyIsSet("window.x",v -> stage.setX(v));
+        callIfIntPropertyIsSet("window.y",v -> stage.setY(v));
         stage.show();
         table.requestFocus();
     }

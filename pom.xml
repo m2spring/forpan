@@ -18,7 +18,7 @@
     <maven.compiler.release>21</maven.compiler.release>
 -->
 
-    <javafx.version>22</javafx.version>
+    <javafx.version>23</javafx.version>
 
     <app.base.name>forpan</app.base.name>
   </properties>
