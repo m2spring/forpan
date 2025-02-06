@@ -11,6 +11,8 @@ cd $PRJ
 props="-Djdk.httpclient.HttpClient.log=requests"
 props=""
 
+export FORPAN_HOME=~/.forpan-dev
+
 set -x
 
 gui/target/forpan/bin/java ${props} \
