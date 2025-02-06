@@ -3,6 +3,7 @@ package org.springdot.forpan.gui;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import org.springdot.forpan.config.ForpanConfig;
 import org.springdot.forpan.util.Lazy;
 
 import java.io.File;
@@ -13,29 +14,33 @@ import java.io.IOException;
  */
 public class Memo{
 
-    private final static File MEMO_FILE = new File(System.getProperty("user.home"),".forpan/memo.json");
-
     public String domain;
     public String target;
 
     static Memo load(){
-        if (MEMO_FILE.exists()){
+        File f = getMemoFile();
+        if (f.exists()){
             try{
-                return mapper.get().readValue(MEMO_FILE,Memo.class);
+                return mapper.get().readValue(f,Memo.class);
             }catch (IOException e){
-                throw new RuntimeException(e.getMessage()+" while reading "+MEMO_FILE,e);
+                throw new RuntimeException(e.getMessage()+" while reading "+f,e);
             }
         }
         return new Memo();
     }
 
     void save(){
-        MEMO_FILE.getParentFile().mkdirs();
+        File f = getMemoFile();
+        f.getParentFile().mkdirs();
         try{
-            mapper.get().writeValue(MEMO_FILE,this);
+            mapper.get().writeValue(f,this);
         }catch (IOException e){
-            throw new RuntimeException(e.getMessage()+" while writing "+MEMO_FILE,e);
+            throw new RuntimeException(e.getMessage()+" while writing "+f,e);
         }
+    }
+
+    private static File getMemoFile(){
+        return new File(ForpanConfig.getForpanHome(),"memo.json");
     }
 
     private static Lazy<ObjectMapper> mapper = Lazy.of(() ->

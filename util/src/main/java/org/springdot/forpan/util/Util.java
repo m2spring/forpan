@@ -17,7 +17,7 @@ public class Util{
     }
 
     public static void callIfIntPropertyIsSet(String propertyName, Consumer<Integer> consumer){
-        Object prop = System.getProperties().get(propertyName);
+        Object prop = System.getProperty(propertyName);
         if (prop != null){
             try{
                 int val = Integer.parseInt(""+prop);

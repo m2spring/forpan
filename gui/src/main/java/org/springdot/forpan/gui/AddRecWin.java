@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 import org.springdot.forpan.config.ForpanConfig;
 import org.springdot.forpan.cpanel.api.CPanelDomain;
+import org.springdot.forpan.util.Util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -80,8 +81,10 @@ class AddRecWin{
         {
             targetAttr = new FormAttr<>(grid,"Target",new TextField(),row)
                 .setValidator(attr -> {
-                    if (!EMAIL_ADDRESS_PATTERN.matcher(attr.field.getText()).matches()){
-                        throw new AttrValidationErrorException("invalid email address");
+                    String txt = attr.field.getText();
+                    if (txt == null) txt = "";
+                    if (!EMAIL_ADDRESS_PATTERN.matcher(txt).matches()){
+                        throw new AttrValidationErrorException("invalid email address "+Util.escapeJava(txt));
                     }
                 });
             targetAttr.field.setText(memo.target);
