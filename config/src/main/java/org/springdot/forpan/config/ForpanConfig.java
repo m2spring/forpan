@@ -1,5 +1,7 @@
 package org.springdot.forpan.config;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -7,11 +9,16 @@ import java.util.Properties;
 
 public class ForpanConfig{
 
-    private final static String CONFIG_PROPS_FILE = ".forpan/config.properties";
+    public static File getForpanHome(){
+        String home = System.getenv("FORPAN_HOME");
+        return !StringUtils.isBlank(home)
+               ? new File(home)
+               : new File(System.getProperty("user.home"),".forpan");
+    }
 
     public static Properties getProperties(){
         Properties props = new Properties();
-        File fn = new File(System.getProperty("user.home"), CONFIG_PROPS_FILE);
+        File fn = new File(getForpanHome(),"config.properties");
         if (fn.exists()){
             System.out.println("loading config from "+fn);
             try{

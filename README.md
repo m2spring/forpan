@@ -25,8 +25,11 @@ Build the project via the `build.sh` script. It's also meant to be called by a C
 
 ## 3. Configuration
 
+The ForPan Home Directory can be specified with the environment variable `FORPAN_HOME`,
+or defaults to `~/.forpan/`, if `FORPAN_HOME` is not set.
+
 ForPan makes use of a [Java properties](https://en.wikipedia.org/wiki/.properties)
-file  `~/.forpan/config.properties` for holding configuration values.
+file `config.properties` in the _ForPan Home Directory_ holding configuration values.
 
 ### cPanel API
 
