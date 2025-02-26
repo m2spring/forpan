@@ -1,8 +1,9 @@
 package org.springdot.forpan.gui;
 
-import org.springdot.forpan.model.FwModel;
+import org.springdot.forpan.model.ForpanModel;
+import org.springdot.forpan.model.ModelSource;
 
 class Env{
-    FwModel model = FwModel.getInstance();
+    ForpanModel model = new ForpanModel(ModelSource.getInstance());
     MainWindow mainWindow;
 }

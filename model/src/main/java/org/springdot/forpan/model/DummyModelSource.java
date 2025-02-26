@@ -12,7 +12,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
 
-public class DummyModel implements FwModel{
+public class DummyModelSource implements ModelSource{
     private final List<CPanelDomain> domains = Stream.of(
         "example.com",
         "example.org",
@@ -43,16 +43,12 @@ public class DummyModel implements FwModel{
     private List<FwRecord> records = randomRecords.get();
 
     @Override
-    public void syncFromServer(){
-    }
-
-    @Override
-    public List<CPanelDomain> getDomains(){
+    public List<CPanelDomain> readDomains(){
         return domains;
     }
 
     @Override
-    public List<FwRecord> getRecords(){
+    public List<FwRecord> readRecords(){
         return records;
     }
 

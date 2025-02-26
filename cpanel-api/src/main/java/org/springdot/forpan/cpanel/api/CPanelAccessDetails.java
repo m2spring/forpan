@@ -23,6 +23,16 @@ public class CPanelAccessDetails{
         }
     }
 
+    /**
+     * For test automation.
+     */
+    public CPanelAccessDetails(String endpoint){
+        config = new Properties();
+        config.put(ENDPOINT,endpoint);
+        config.put(USER,"resu");
+        config.put(PASS,"sapp");
+    }
+
     public CPanelAccessDetails setEndpoint(String ep){
         config.put(ENDPOINT,ep);
         return this;
