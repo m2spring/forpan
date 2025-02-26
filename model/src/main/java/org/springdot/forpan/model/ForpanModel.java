@@ -49,7 +49,7 @@ public class ForpanModel{
     }
 
     public List<FwRecord> getRecords(){
-        return records;
+        return records != null? records : Collections.EMPTY_LIST;
     }
 
     public void setRecords(List<FwRecord> records){
