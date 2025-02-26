@@ -14,6 +14,10 @@ public class TestUtil{
         System.out.println("\n################# "+getMethodName(index+1)+msg);
     }
 
+    public static String getMethodName(){
+        return getMethodName(1);
+    }
+
     public static String getMethodName(int index){
         return new Exception().getStackTrace()[index+1].getMethodName();
     }

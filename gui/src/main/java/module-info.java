@@ -11,4 +11,5 @@ module org.springdot.forpan.gui {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.material2;
     requires org.springdot.forpan.config;
+    requires org.springdot.forpan.util;
 }

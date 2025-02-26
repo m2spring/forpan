@@ -19,6 +19,9 @@ public class App extends Application {
         env.mainWindow = w;
         w.show();
 
-        new Thread(() -> w.refreshTable()).start();
+        new Thread(() -> {
+            w.refreshTable(model -> model.load());
+            w.refreshTable();
+        }).start();
     }
 }

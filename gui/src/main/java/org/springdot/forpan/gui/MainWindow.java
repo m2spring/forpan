@@ -33,10 +33,12 @@ import javafx.util.Duration;
 import org.apache.commons.lang3.StringUtils;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.material2.Material2MZ;
+import org.springdot.forpan.model.ForpanModel;
 import org.springdot.forpan.model.FwRecord;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 import static org.springdot.forpan.util.Util.callIfIntPropertyIsSet;
 
@@ -175,10 +177,14 @@ class MainWindow{
     }
 
     void refreshTable(){
+        refreshTable(model -> model.syncFromServer());
+    }
+
+    void refreshTable(Consumer<ForpanModel> modelAction){
         SortState sortState = SortState.get(table);
         FwRecord currFwdr = getSelectedForwarder();
         setStatus("loading model...");
-        env.model.syncFromServer();
+        modelAction.accept(env.model);
         List<FwRecord> recs = env.model.getRecords();
         setStatus("model loaded ("+recs.size()+")");
 
@@ -211,7 +217,7 @@ class MainWindow{
             if (fwdr.equalsIgnoreCase(rec.getForwarder())){
                 table.getSelectionModel().clearSelection();
                 selectRow(i);
-                table.requestFocus();
+                Platform.runLater(() -> table.requestFocus());
                 return;
             }
         }
@@ -243,7 +249,7 @@ class MainWindow{
             }
         }
 
-        table.scrollTo(idx);
+        Platform.runLater(() -> table.scrollTo(idx));
     }
 
     private FwRecord getSelectedForwarder(){

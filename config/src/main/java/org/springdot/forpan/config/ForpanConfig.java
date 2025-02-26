@@ -9,7 +9,15 @@ import java.util.Properties;
 
 public class ForpanConfig{
 
+    private static String forpanHome = null;
+
+    public static void setForpanHome(String d){
+        forpanHome = d;
+    }
+
     public static File getForpanHome(){
+        if (!StringUtils.isBlank(forpanHome)) return new File(forpanHome);
+
         String home = System.getenv("FORPAN_HOME");
         return !StringUtils.isBlank(home)
                ? new File(home)
