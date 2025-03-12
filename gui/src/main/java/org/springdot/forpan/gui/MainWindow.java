@@ -16,6 +16,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
 import javafx.scene.control.IndexedCell;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -28,6 +29,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.commons.lang3.StringUtils;
@@ -40,6 +42,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import static org.springdot.forpan.model.RecordState.COMMISSIONED;
 import static org.springdot.forpan.util.Util.callIfIntPropertyIsSet;
 
 class MainWindow{
@@ -160,14 +163,65 @@ class MainWindow{
         table.setPlaceholder(new Label(""));
 
         var fwdrCol = new TableColumn<FwRecord,String>("Forwarder");
+        var statCol = new TableColumn<FwRecord,Void>(" ");
         var trgtCol = new TableColumn<FwRecord,String>("Target");
 
         fwdrCol.setCellValueFactory(new PropertyValueFactory<FwRecord,String>("forwarder"));
         fwdrCol.prefWidthProperty().bind(table.widthProperty().multiply(0.65));
+        fwdrCol.setCellFactory(rec -> new TableCell<>(){
+            private final Text text = new Text();
+            private final Tooltip tooltip = new Tooltip("foodee");
+
+            @Override
+            protected void updateItem(String item, boolean empty){
+                super.updateItem(item,empty);
+                FwRecord rec = getTableRow().getItem();
+                if (empty || rec == null || StringUtils.isBlank(item)){
+                    setGraphic(null);
+                }else{
+                    text.setText(item);
+                    boolean strikethrough = rec.getLastState() != COMMISSIONED;
+                    text.setStrikethrough(strikethrough);
+                    if (strikethrough){
+                        tooltip.setText(item);
+                        Tooltip.install(text,tooltip);
+                    }else{
+                        Tooltip.uninstall(text,tooltip);
+                    }
+                    setGraphic(text);
+                }
+            }
+        });
+
+        statCol.prefWidthProperty().bind(table.widthProperty().multiply(0.05));
+        statCol.setCellFactory(rec -> new TableCell<>(){
+            private final FontIcon icon = new FontIcon();
+            private final Tooltip tooltip = new Tooltip();
+            {
+                Tooltip.install(icon,tooltip);
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty){
+                super.updateItem(item,empty);
+                FwRecord rec = getTableRow().getItem();
+                if (empty || rec == null){
+                    setGraphic(null);
+                }else{
+                    StateRender sr = StateRender.get(rec.getLastState());
+                    icon.setIconLiteral(sr.icon());
+                    icon.setStyle("-fx-icon-color: "+sr.color()+";");
+                    tooltip.setText(sr.tooltip());
+                    setGraphic(icon);
+                }
+            }
+        });
+
         trgtCol.setCellValueFactory(new PropertyValueFactory<FwRecord,String>("target"));
         trgtCol.prefWidthProperty().bind(table.widthProperty().multiply(0.3));
+
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        table.getColumns().addAll(fwdrCol,trgtCol);
+        table.getColumns().addAll(fwdrCol,statCol,trgtCol);
         table.getSelectionModel().selectedItemProperty().addListener((observable,oldVal,newVal) -> {
             if (newVal == null && !table.getItems().isEmpty()){
                 table.getSelectionModel().select(0);

@@ -16,6 +16,7 @@ ForPan makes this more convenient for users who want to do this while sitting in
 ## 2. Installation
 
 Requirements
+
 * JDK 21 (get an OpenJDK from [Adoptium](https://adoptium.net/))
 * Maven 3.9.9 (from the [Apache Maven Project](https://maven.apache.org/download.cgi))
 
