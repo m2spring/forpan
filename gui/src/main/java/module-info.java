@@ -12,4 +12,5 @@ module org.springdot.forpan.gui {
     requires org.kordamp.ikonli.material2;
     requires org.springdot.forpan.config;
     requires org.springdot.forpan.util;
+    requires org.kordamp.ikonli.fontawesome5;
 }
