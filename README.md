@@ -53,7 +53,7 @@ cpanel.pass=
 To prepopulate a new forwarder with a date/time stamp, define a propery `forwarder.init.pattern=`
 with a value following the syntax of [SimpleDateFormat](https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html).
 
-E.g. with `forwarder.init.pattern=yyMMDD` the forwarder field is initialized
+E.g. with `forwarder.init.pattern=yyMMdd` the forwarder field is initialized
 with the current date.
 
 ## 4. Usage
