@@ -5,7 +5,6 @@ import okhttp3.mockwebserver.MockWebServer;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.springdot.forpan.config.ForpanConfig;
 import org.springdot.forpan.cpanel.api.CPanelAccessDetails;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ import static org.springdot.forpan.util.TestUtil.getMethodName;
 import static org.springdot.forpan.util.TestUtil.showMethod;
 import static org.springdot.forpan.util.Util.escapeJava;
 
-public class ModelTest{
+public class ModelTest extends ModelTestBase{
 
     private static MockWebServer server;
 
@@ -126,11 +125,7 @@ public class ModelTest{
     }
 
     private ForpanModel mkModel(String method){
-        ForpanConfig.setForpanHome(
-            System.getProperty("buildDirectory")+
-                "/"+this.getClass().getSimpleName()+
-                "/"+method
-        );
+        setForpanHome(method);
 
         RemoteModelSource msrc = new RemoteModelSource(new CPanelAccessDetails("http://localhost:"+server.getPort()));
 

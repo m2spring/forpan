@@ -83,7 +83,7 @@ public class ForpanModel{
         try{
             mapper.get().writeValue(tmpF,this);
             File newF = mkFilename("");
-            if (newF.exists()){ // TODO: saving old record.json files should be configurable?
+            if (!ForpanConfig.isDisabledRecordBackup() && newF.exists()){
                 FileTime lastModifiedTime = Files.getLastModifiedTime(newF.toPath());
                 String ts = Formats.FORMAT_YMDHMSM.format(new Date(lastModifiedTime.toMillis()));
                 Files.move(newF.toPath(),mkFilename("."+ts+".").toPath(),ATOMIC_MOVE,REPLACE_EXISTING);
