@@ -9,6 +9,8 @@ import java.util.Properties;
 
 public class ForpanConfig{
 
+    public final static String DISABLED_RECORD_BACKUP_PROP = "disable.record.backup";
+
     private static String forpanHome = null;
 
     public static void setForpanHome(String d){
@@ -26,9 +28,9 @@ public class ForpanConfig{
 
     public static Properties getProperties(){
         Properties props = new Properties();
-        File fn = new File(getForpanHome(),"config.properties");
+        File fn = getPropertiesFile();
         if (fn.exists()){
-            System.out.println("loading config from "+fn);
+            // TODO: logging System.out.println("loading config from "+fn);
             try{
                 props.load(new FileInputStream(fn));
             }catch (IOException e){
@@ -38,7 +40,15 @@ public class ForpanConfig{
         return props;
     }
 
+    public static File getPropertiesFile(){
+        return new File(getForpanHome(),"config.properties");
+    }
+
     public static String getForwarderInitPattern(){
         return getProperties().getProperty("forwarder.init.pattern");
+    }
+
+    public static boolean isDisabledRecordBackup(){
+        return StringUtils.equals("true",getProperties().getProperty(DISABLED_RECORD_BACKUP_PROP));
     }
 }
