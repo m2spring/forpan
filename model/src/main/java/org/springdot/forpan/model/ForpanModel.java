@@ -56,12 +56,17 @@ public class ForpanModel{
         this.records = records;
     }
 
-    public void addForwarder(String forwarder, CPanelDomain domain, String target){
-        modelSource.addForwarder(forwarder,domain,target);
+    public void addForwarder(FwRecord rec){
+        if (records == null) records = new ArrayList<>();
+        records.add(rec);
     }
 
-    public void delForwarder(FwRecord rec){
-        modelSource.delForwarder(rec);
+    public void createForwarder(FwRecord rec){
+        modelSource.createForwarder(rec);
+    }
+
+    public void removeForwarder(FwRecord rec){
+        modelSource.removeForwarder(rec);
     }
 
     public void load(){

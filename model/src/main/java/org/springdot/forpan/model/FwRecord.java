@@ -8,6 +8,7 @@ import java.util.List;
 import static org.springdot.forpan.util.Util.escapeJava;
 
 public class FwRecord{
+    String title;
     String forwarder;
     String target;
     List<RecordStateEntry> states;
@@ -27,6 +28,14 @@ public class FwRecord{
 
     public String getForwarder(){
         return forwarder;
+    }
+
+    public String getTitle(){
+        return title;
+    }
+
+    public void setTitle(String title){
+        this.title = title;
     }
 
     public void setForwarder(String forwarder){

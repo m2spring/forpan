@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
 import org.springdot.forpan.config.ForpanConfig;
 import org.springdot.forpan.cpanel.api.CPanelDomain;
+import org.springdot.forpan.model.FwRecord;
 import org.springdot.forpan.util.Util;
 
 import java.text.SimpleDateFormat;
@@ -26,17 +27,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.springdot.forpan.gui.Common.EMAIL_ADDRESS_PATTERN;
 
-class AddRecWin{
+class RecordWindow{
     private Env env;
     private Stage primaryStage;
     private Memo memo;
     private Stage dialog;
+    private FormAttr<TextField> titleAttr;
     private FormAttr<ComboBox<CPanelDomain>> domainAttr;
     private FormAttr<TextField> forwarderAttr;
     private FormAttr<TextField> targetAttr;
     private Button okButton;
 
-    public AddRecWin(Env env, Stage primaryStage){
+    public RecordWindow(Env env, Stage primaryStage){
         this.env = env;
         this.primaryStage = primaryStage;
         this.memo = Memo.load();
@@ -53,6 +55,10 @@ class AddRecWin{
 
         // TODO: have a more generic "form of attribute" notion
         AtomicInteger row = new AtomicInteger();
+
+        {
+            titleAttr = new FormAttr<>(grid,"Title",new TextField(),row);
+        }
 
         {
             var combo = new ComboBox<CPanelDomain>();
@@ -114,7 +120,7 @@ class AddRecWin{
             row.incrementAndGet();
         }
 
-        new Form(domainAttr,forwarderAttr,targetAttr).setValidator(nofErrAttrs -> {
+        new Form(titleAttr,domainAttr,forwarderAttr,targetAttr).setValidator(nofErrAttrs -> {
             okButton.setDisable(nofErrAttrs > 0);
         });
 
@@ -162,17 +168,25 @@ class AddRecWin{
     private void add(ActionEvent ev){
         if (okButton.isDisabled()) return;
 
-        String fwdr = forwarderAttr.field.getText();
-        CPanelDomain dmn = domainAttr.field.getValue();
-        String trgt = targetAttr.field.getText();
-        env.model.addForwarder(fwdr,dmn,trgt);
-        memo.domain = dmn.name();
-        memo.target = trgt;
+        CPanelDomain domain = domainAttr.field.getValue();
+        String forwarder = forwarderAttr.field.getText()+"@"+domain;
+        String target = targetAttr.field.getText();
+
+        FwRecord rec = new FwRecord();
+        rec.setForwarder(forwarder);
+        rec.setTarget(target);
+        rec.setTitle(titleAttr.field.getText());
+
+        env.model.addForwarder(rec);
+        env.model.createForwarder(rec);
+
+        memo.domain = domain.name();
+        memo.target = target;
         memo.save();
         dialog.close();
         env.mainWindow.refreshTable();
 
         // TODO: find a better way to select & navigate to the newly added forwarded
-        env.mainWindow.gotoForwarderByName(fwdr+"@"+dmn);
+        env.mainWindow.gotoForwarderByName(forwarder);
     }
 }
