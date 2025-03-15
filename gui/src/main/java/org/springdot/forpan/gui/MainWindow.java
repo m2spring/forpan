@@ -162,15 +162,19 @@ class MainWindow{
         table = new TableView<FwRecord>();
         table.setPlaceholder(new Label(""));
 
+        var titleCol = new TableColumn<FwRecord,String>("Title");
         var fwdrCol = new TableColumn<FwRecord,String>("Forwarder");
-        var statCol = new TableColumn<FwRecord,Void>(" ");
+        var statCol = new TableColumn<FwRecord,Void>("State");
         var trgtCol = new TableColumn<FwRecord,String>("Target");
 
+        titleCol.setCellValueFactory(new PropertyValueFactory<FwRecord,String>("title"));
+        titleCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
+
         fwdrCol.setCellValueFactory(new PropertyValueFactory<FwRecord,String>("forwarder"));
-        fwdrCol.prefWidthProperty().bind(table.widthProperty().multiply(0.65));
+        fwdrCol.prefWidthProperty().bind(table.widthProperty().multiply(0.6));
         fwdrCol.setCellFactory(rec -> new TableCell<>(){
             private final Text text = new Text();
-            private final Tooltip tooltip = new Tooltip("foodee");
+            private final Tooltip tooltip = new Tooltip();
 
             @Override
             protected void updateItem(String item, boolean empty){
@@ -218,10 +222,10 @@ class MainWindow{
         });
 
         trgtCol.setCellValueFactory(new PropertyValueFactory<FwRecord,String>("target"));
-        trgtCol.prefWidthProperty().bind(table.widthProperty().multiply(0.3));
+        trgtCol.prefWidthProperty().bind(table.widthProperty().multiply(0.25));
 
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        table.getColumns().addAll(fwdrCol,statCol,trgtCol);
+        table.getColumns().addAll(titleCol,fwdrCol,statCol,trgtCol);
         table.getSelectionModel().selectedItemProperty().addListener((observable,oldVal,newVal) -> {
             if (newVal == null && !table.getItems().isEmpty()){
                 table.getSelectionModel().select(0);
@@ -312,7 +316,7 @@ class MainWindow{
     }
 
     private void addRecord(ActionEvent aev){
-        new AddRecWin(env,stage).show();
+        new RecordWindow(env,stage).show();
     }
 
     private void delRecord(ActionEvent aev){
@@ -328,7 +332,7 @@ class MainWindow{
 
         if (res.get() == ButtonType.OK){
             int currIdx = table.getSelectionModel().getSelectedIndex();
-            env.model.delForwarder(currFwdr);
+            env.model.removeForwarder(currFwdr);
             refreshTable();
             int size = table.getItems().size();
             if (currIdx > size) currIdx = size-1;
