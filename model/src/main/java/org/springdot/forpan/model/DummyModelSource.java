@@ -53,12 +53,12 @@ public class DummyModelSource implements ModelSource{
     }
 
     @Override
-    public void addForwarder(String forwarder, CPanelDomain domain, String target){
-        records.add(new FwRecord(forwarder+"@"+domain,target));
+    public void createForwarder(FwRecord rec){
+        records.add(rec);
     }
 
     @Override
-    public void delForwarder(FwRecord rec){
+    public void removeForwarder(FwRecord rec){
         records.removeIf(f -> StringUtils.equals(f.forwarder,rec.forwarder));
     }
 }

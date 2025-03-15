@@ -8,8 +8,8 @@ import java.util.List;
 public interface ModelSource{
     List<CPanelDomain> readDomains();
     List<FwRecord> readRecords();
-    void addForwarder(String forwarder, CPanelDomain domain, String target);
-    void delForwarder(FwRecord rec);
+    void createForwarder(FwRecord rec);
+    void removeForwarder(FwRecord rec);
 
     static ModelSource getInstance(){
         return (StringUtils.equals("true",System.getenv("FORPAN_DUMMY_MODEL")))
