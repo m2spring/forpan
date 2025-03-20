@@ -38,7 +38,7 @@ public class RemoteModelSource implements ModelSource{
     @Override
     public void createForwarder(FwRecord rec){
         api.addForwarder(new CPanelForwarder(
-            rec.getForwarder()+"@"+rec.getDomain(),
+            rec.getForwarder(),
             rec.getTarget()
         ));
     }
