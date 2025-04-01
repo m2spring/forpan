@@ -9,6 +9,7 @@ import org.springdot.forpan.config.Formats;
 import org.springdot.forpan.config.ForpanConfig;
 import org.springdot.forpan.cpanel.api.CPanelDomain;
 import org.springdot.forpan.util.Lazy;
+import org.springdot.forpan.util.RandomWordGenerator;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -188,5 +190,19 @@ public class ForpanModel{
             if (equalsAnyIgnoreCase(forwarder,rec.getForwarder())) return rec;
         }
         return null;
+    }
+
+    /**
+     * @return Random forwarder string which does not yet exist.
+     */
+    public String generateRandomForwarder(){
+        Set<String> forwarders = records.stream().map(rec -> rec.forwarder).collect(Collectors.toSet());
+        RandomWordGenerator rnd = new RandomWordGenerator();
+        final int N = 10;
+        for (int i=0; i<N; i++){
+            String fwdr = rnd.generate();
+            if (!forwarders.contains(fwdr)) return fwdr;
+        }
+        throw new RuntimeException("fatal: unable to generate random forwarder within "+N+" attempts");
     }
 }

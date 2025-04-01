@@ -1,13 +1,16 @@
 package org.springdot.forpan.gui;
 
+import atlantafx.base.controls.CustomTextField;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -16,6 +19,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringSubstitutor;
+import org.kordamp.ikonli.javafx.FontIcon;
 import org.springdot.forpan.config.ForpanConfig;
 import org.springdot.forpan.cpanel.api.CPanelDomain;
 import org.springdot.forpan.model.FwRecord;
@@ -25,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static javafx.scene.input.KeyEvent.KEY_PRESSED;
 import static org.springdot.forpan.gui.Common.EMAIL_ADDRESS_PATTERN;
 
 class RecordWindow{
@@ -34,7 +40,7 @@ class RecordWindow{
     private Stage dialog;
     private FormAttr<TextField> titleAttr;
     private FormAttr<ComboBox<CPanelDomain>> domainAttr;
-    private FormAttr<TextField> forwarderAttr;
+    private FormAttr<CustomTextField> forwarderAttr;
     private FormAttr<TextField> targetAttr;
     private Button okButton;
 
@@ -68,7 +74,21 @@ class RecordWindow{
         }
 
         {
-            forwarderAttr = new FormAttr<>(grid,"Forwarder",new TextField(),row)
+            CustomTextField forwarderTextField = new CustomTextField();
+            {
+                FontIcon icon = new FontIcon();
+                icon.setIconLiteral("fas-feather");
+                forwarderTextField.setRight(icon);
+                Tooltip.install(icon,new Tooltip("Generate Random (Ctrl-G)"));
+                icon.setOnMouseEntered(e -> icon.setCursor(Cursor.HAND));
+                icon.setOnMouseExited(e -> icon.setCursor(Cursor.DEFAULT));
+                icon.setOnMouseClicked(e -> generateRandomForwarder());
+                forwarderTextField.addEventFilter(KEY_PRESSED,e -> {
+                    if (Common.KEY_CONTROL_G.match(e)) generateRandomForwarder();
+                });
+            }
+
+            forwarderAttr = new FormAttr<>(grid,"Forwarder",forwarderTextField,row)
                 .setValidator(attr -> {
                     String fwdr = attr.field.getText()+"@"+domainAttr.field.getValue();
                     if (!EMAIL_ADDRESS_PATTERN.matcher(fwdr).matches()){
@@ -80,7 +100,11 @@ class RecordWindow{
                 });
             String ip = ForpanConfig.getForwarderInitPattern();
             if (!StringUtils.isBlank(ip)){
-                forwarderAttr.field.setText(new SimpleDateFormat(ip).format(new Date()));
+                forwarderAttr.field.setText(new StringSubstitutor(key -> {
+                    if ("R".equals(key)) return env.model.generateRandomForwarder();
+                    if (key.startsWith("T:")) return new SimpleDateFormat(key.substring(2)).format(new Date());
+                    return "??"+key+"??";
+                }).replace(ip));
             }
         }
 
@@ -149,7 +173,7 @@ class RecordWindow{
             dialog.setY(y - dialog.getHeight()/2d);
         });
 
-        forwarderAttr.field.requestFocus();
+        titleAttr.field.requestFocus();
         dialog.show();
     }
 
@@ -163,6 +187,10 @@ class RecordWindow{
             }
         }
         domainAttr.field.getSelectionModel().selectFirst();
+    }
+
+    private void generateRandomForwarder(){
+        forwarderAttr.field.setText(env.model.generateRandomForwarder());
     }
 
     private void add(ActionEvent ev){

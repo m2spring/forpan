@@ -51,10 +51,13 @@ cpanel.pass=
 ### UI
 
 To prepopulate a new forwarder with a date/time stamp, define a propery `forwarder.init.pattern=`
-with a value following the syntax of [SimpleDateFormat](https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html).
+with a string value which can have the following template placeholders:
 
-E.g. with `forwarder.init.pattern=yyMMdd` the forwarder field is initialized
-with the current date.
+* `${R}` gets replaced with a random forwarder name
+* <code>${T:_pattern_}</code> gets replaced with a date/time stamp where <code>_pattern_</code> follows the syntax of [SimpleDateFormat](https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html).
+
+E.g. with `forwarder.init.pattern=${T:yyyy-MM-dd}` the forwarder field is initialized
+with the current date like `2025-03-31`.
 
 ## 4. Usage
 
@@ -73,6 +76,8 @@ Shows all forwarders with their respective target address.
 ### Add Forwarder
 
 ![add](screenshots/add.png)
+
+Clicking the feather icon or pressing Ctrl-G in the _Forwarder_ field generates a new random forwarder string.
 
 ### Delete Forwarder
 
