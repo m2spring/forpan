@@ -8,6 +8,7 @@ module org.springdot.forpan.gui {
     requires org.springdot.forpan.model;
     requires com.fasterxml.jackson.databind;
     requires org.apache.commons.lang3;
+    requires org.apache.commons.text;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.material2;
     requires org.springdot.forpan.config;
