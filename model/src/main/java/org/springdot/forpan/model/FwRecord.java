@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springdot.forpan.cpanel.api.CPanelForwarder;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.springdot.forpan.util.Util.escapeJava;
 
 public class FwRecord{
+    UUID uuid = UUID.randomUUID();
     String title;
     String forwarder;
     String target;
@@ -24,6 +26,14 @@ public class FwRecord{
     FwRecord(String forwarder, String target){
         this.forwarder = forwarder;
         this.target = target;
+    }
+
+    public UUID getUuid(){
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid){
+        this.uuid = uuid;
     }
 
     public String getForwarder(){
