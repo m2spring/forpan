@@ -23,21 +23,26 @@ import org.apache.commons.text.StringSubstitutor;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.springdot.forpan.config.ForpanConfig;
 import org.springdot.forpan.cpanel.api.CPanelDomain;
+import org.springdot.forpan.model.ForpanModel;
 import org.springdot.forpan.model.FwRecord;
-import org.springdot.forpan.util.Util;
+import org.springdot.forpan.model.FwRecordChange;
+import org.springdot.forpan.model.RecordState;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 import static javafx.scene.input.KeyEvent.KEY_PRESSED;
 import static org.springdot.forpan.gui.Common.EMAIL_ADDRESS_PATTERN;
+import static org.springdot.forpan.util.Util.escapeJava;
 
 class RecordWindow{
     private Env env;
     private Stage primaryStage;
     private Memo memo;
     private Stage dialog;
+    private FwRecord origRec;
     private FormAttr<TextField> titleAttr;
     private FormAttr<ComboBox<CPanelDomain>> domainAttr;
     private FormAttr<CustomTextField> forwarderAttr;
@@ -48,9 +53,10 @@ class RecordWindow{
         this.env = env;
         this.primaryStage = primaryStage;
         this.memo = Memo.load();
+        init();
     }
 
-    void show(){
+    private void init(){
         dialog = new Stage();
         dialog.initOwner(primaryStage);
         dialog.setTitle("New Forwarder");
@@ -70,7 +76,6 @@ class RecordWindow{
             var combo = new ComboBox<CPanelDomain>();
             domainAttr = new FormAttr(grid,"Domain",combo,row);
             combo.getItems().addAll(env.model.getDomains());
-            preSelectDomain();
         }
 
         {
@@ -94,18 +99,12 @@ class RecordWindow{
                     if (!EMAIL_ADDRESS_PATTERN.matcher(fwdr).matches()){
                         throw new AttrValidationErrorException("invalid forwarder username");
                     }
-                    if (env.model.containsForwarder(fwdr)){
-                        throw new AttrValidationErrorException("forwarder already exists");
+                    if (origRec == null || !StringUtils.equals(origRec.getForwarder(),fwdr)){
+                        if (env.model.containsForwarder(fwdr)){
+                            throw new AttrValidationErrorException("forwarder already exists");
+                        }
                     }
                 });
-            String ip = ForpanConfig.getForwarderInitPattern();
-            if (!StringUtils.isBlank(ip)){
-                forwarderAttr.field.setText(new StringSubstitutor(key -> {
-                    if ("R".equals(key)) return env.model.generateRandomForwarder();
-                    if (key.startsWith("T:")) return new SimpleDateFormat(key.substring(2)).format(new Date());
-                    return "??"+key+"??";
-                }).replace(ip));
-            }
         }
 
         {
@@ -114,10 +113,9 @@ class RecordWindow{
                     String txt = attr.field.getText();
                     if (txt == null) txt = "";
                     if (!EMAIL_ADDRESS_PATTERN.matcher(txt).matches()){
-                        throw new AttrValidationErrorException("invalid email address "+Util.escapeJava(txt));
+                        throw new AttrValidationErrorException("invalid email address "+escapeJava(txt));
                     }
                 });
-            targetAttr.field.setText(memo.target);
         }
 
         {
@@ -134,7 +132,7 @@ class RecordWindow{
                 {
                     okButton = new Button("OK");
                     okButton.setBackground(new Background(new BackgroundFill(Color.GREEN,null,null)));
-                    okButton.setOnAction(this::add);
+                    okButton.setOnAction(this::apply);
                     c.add(okButton);
                 }
             }
@@ -158,10 +156,42 @@ class RecordWindow{
             if (Common.KEY_ESC.match(ev)){
                 dialog.close();
             }else if (Common.KEY_ENTER.match(ev)){
-                add(null);
+                apply(null);
             }
         });
+    }
 
+    public RecordWindow createNewFwdr(){
+        setDomain(memo.domain);
+
+        String ip = ForpanConfig.getForwarderInitPattern();
+        if (!StringUtils.isBlank(ip)){
+            forwarderAttr.field.setText(new StringSubstitutor(key -> {
+                if ("R".equals(key)) return env.model.generateRandomForwarder();
+                if (key.startsWith("T:")) return new SimpleDateFormat(key.substring(2)).format(new Date());
+                return "??"+key+"??";
+            }).replace(ip));
+        }
+
+        targetAttr.field.setText(memo.target);
+
+        return this;
+    }
+
+    public RecordWindow setOrigRec(FwRecord origRec){
+        this.origRec = origRec;
+        setField(origRec.getTitle(),title -> titleAttr.field.setText(title));
+        setField(origRec.getDomain(),domain -> setDomain(domain));
+        setField(origRec.getFwdrAddr(),fwdr -> forwarderAttr.field.setText(fwdr));
+        setField(origRec.getTarget(),target -> targetAttr.field.setText(target));
+        return this;
+    }
+
+    private void setField(String value, Consumer<String> consumer){
+        if (!StringUtils.isBlank(value)) consumer.accept(value);
+    }
+
+    void show(){
         var x = primaryStage.getX() + primaryStage.getWidth()/2d;
         var y = primaryStage.getY() + primaryStage.getHeight()/2d;
 
@@ -177,15 +207,19 @@ class RecordWindow{
         dialog.show();
     }
 
-    private void preSelectDomain(){
+    private void setDomain(String domain){
         ObservableList<CPanelDomain> items = domainAttr.field.getItems();
         for (int i=0, n=items.size(); i<n; i++){
             CPanelDomain cPanelDomain = items.get(i);
-            if (StringUtils.equals(memo.domain,cPanelDomain.name())){
+            if (StringUtils.equals(domain,cPanelDomain.name())){
                 domainAttr.field.getSelectionModel().select(i);
                 return;
             }
         }
+
+        // TODO: a real logging
+        System.out.println("[warning] unable to set domain "+escapeJava(domain));
+        System.out.println("available domains: "+items);
         domainAttr.field.getSelectionModel().selectFirst();
     }
 
@@ -193,7 +227,7 @@ class RecordWindow{
         forwarderAttr.field.setText(env.model.generateRandomForwarder());
     }
 
-    private void add(ActionEvent ev){
+    private void apply(ActionEvent ev){
         if (okButton.isDisabled()) return;
 
         CPanelDomain domain = domainAttr.field.getValue();
@@ -205,16 +239,37 @@ class RecordWindow{
         rec.setTarget(target);
         rec.setTitle(titleAttr.field.getText());
 
-        env.model.addForwarder(rec);
-        env.model.createForwarder(rec);
+        if (origRec != null){
+            updateRec(rec);
+        }else{
+            env.model.addForwarder(rec);
+            env.model.createForwarder(rec);
 
-        memo.domain = domain.name();
-        memo.target = target;
-        memo.save();
+            memo.domain = domain.name();
+            memo.target = target;
+            memo.save();
+        }
+
         dialog.close();
         env.mainWindow.refreshTable();
 
         // TODO: find a better way to select & navigate to the newly added forwarded
         env.mainWindow.gotoForwarderByName(forwarder);
+    }
+
+    private void updateRec(FwRecord newRec){
+        FwRecordChange rc = FwRecordChange.create(origRec,newRec);
+        if (!rc.hasChange()) return;
+
+        // TODO: having the diff all within one string is not great
+        ForpanModel.appendState(origRec,RecordState.MODIFIED).details = rc.getDetails();
+
+        if (!rc.hasCoreAttrChange()){
+            origRec.updateWith(newRec);
+        }else{
+            env.model.removeForwarder(origRec);
+            origRec.updateWith(newRec);
+            env.model.createForwarder(newRec);
+        }
     }
 }

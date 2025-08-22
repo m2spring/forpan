@@ -157,7 +157,14 @@ public class ForpanModel{
                 return rse;
             }
         }
+        return appState(rec,time,state);
+    }
 
+    public static RecordStateEntry appendState(FwRecord rec, RecordState state){
+        return appState(rec,new Date(),state);
+    }
+
+    private static RecordStateEntry appState(FwRecord rec, Date time, RecordState state){
         RecordStateEntry rse = new RecordStateEntry(time,state);
         rec.states.add(rse);
         return rse;

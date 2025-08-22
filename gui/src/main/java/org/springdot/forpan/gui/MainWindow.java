@@ -43,6 +43,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 import static org.springdot.forpan.model.RecordState.COMMISSIONED;
+import static org.springdot.forpan.model.RecordState.DECOMMISSIONED;
 import static org.springdot.forpan.util.Util.callIfIntPropertyIsSet;
 
 class MainWindow{
@@ -81,9 +82,16 @@ class MainWindow{
                 c.add(b);
             }
             {
+                var b = new Button("Edit");
+                b.setTooltip(new Tooltip("Edit current forwarder"));
+                // TODO: Edit button should only be active if a row is selected and forwarder is not decommissioned
+                b.setOnAction(this::editRecord);
+                c.add(b);
+            }
+            {
                 var b = new Button("Delete");
                 b.setTooltip(new Tooltip("Delete current forwarder"));
-                // TODO: Delete button should only be active if a row is selected
+                // TODO: Delete button should only be active if a row is selected and forwarder is not decommissioned
                 b.setOnAction(this::delRecord);
                 c.add(b);
             }
@@ -145,6 +153,8 @@ class MainWindow{
             refreshTable();
         }else if (Common.KEY_CONTROL_N.match(ev) || Common.KEY_INSERT.match(ev)){
             addRecord(null);
+        }else if (Common.KEY_CONTROL_E.match(ev) || Common.KEY_ENTER.match(ev)){
+            editRecord(null);
         }else if (Common.KEY_CONTROL_D.match(ev) || Common.KEY_DELETE.match(ev)){
             delRecord(null);
         }else if (Common.KEY_CONTROL_C.match(ev)){
@@ -316,27 +326,43 @@ class MainWindow{
     }
 
     private void addRecord(ActionEvent aev){
-        new RecordWindow(env,stage).show();
+        new RecordWindow(env,stage)
+            .createNewFwdr()
+            .show();
+    }
+
+    private void editRecord(ActionEvent aev){
+        applyToCurrFwdr(currFwdr -> {
+            new RecordWindow(env,stage)
+                .setOrigRec(currFwdr)
+                .show();
+        });
     }
 
     private void delRecord(ActionEvent aev){
+        applyToCurrFwdr(currFwdr -> {
+            var alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.initOwner(stage);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("Delete Forwarder?");
+            alert.setContentText(currFwdr.getForwarder()+" → "+currFwdr.getTarget());
+            Optional<ButtonType> res = alert.showAndWait();
+
+            if (res.get() == ButtonType.OK){
+                int currIdx = table.getSelectionModel().getSelectedIndex();
+                env.model.removeForwarder(currFwdr);
+                refreshTable();
+                int size = table.getItems().size();
+                if (currIdx > size) currIdx = size-1;
+                table.getSelectionModel().select(currIdx);
+            }
+        });
+    }
+
+    private void applyToCurrFwdr(Consumer<FwRecord> action){
         FwRecord currFwdr = getSelectedForwarder();
-        if (currFwdr == null) return;
-
-        var alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.initOwner(stage);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText("Delete Forwarder?");
-        alert.setContentText(currFwdr.getForwarder()+" → "+currFwdr.getTarget());
-        Optional<ButtonType> res = alert.showAndWait();
-
-        if (res.get() == ButtonType.OK){
-            int currIdx = table.getSelectionModel().getSelectedIndex();
-            env.model.removeForwarder(currFwdr);
-            refreshTable();
-            int size = table.getItems().size();
-            if (currIdx > size) currIdx = size-1;
-            table.getSelectionModel().select(currIdx);
+        if (currFwdr != null && currFwdr.getLastState() != DECOMMISSIONED){
+            action.accept(currFwdr);
         }
     }
 
