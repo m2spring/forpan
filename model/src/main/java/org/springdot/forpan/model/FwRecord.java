@@ -28,6 +28,12 @@ public class FwRecord{
         this.target = target;
     }
 
+    public void updateWith(FwRecord that){
+        this.title = that.title;
+        this.forwarder = that.forwarder;
+        this.target = that.target;
+    }
+
     public UUID getUuid(){
         return uuid;
     }
@@ -71,6 +77,15 @@ public class FwRecord{
     @JsonIgnore
     public RecordState getLastState(){
         return states == null? null : states.getLast().state;
+    }
+
+    @JsonIgnore
+    public String getFwdrAddr(){
+        if (forwarder != null){
+            int p = forwarder.lastIndexOf('@');
+            if (p > -1) return forwarder.substring(0,p);
+        }
+        return null;
     }
 
     @JsonIgnore

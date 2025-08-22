@@ -18,6 +18,7 @@ class Common{
     final static KeyCombination KEY_CURSOR_DN = new KeyCodeCombination(KeyCode.DOWN);
     final static KeyCombination KEY_CONTROL_C = new KeyCodeCombination(KeyCode.C,CONTROL_DOWN);
     final static KeyCombination KEY_CONTROL_D = new KeyCodeCombination(KeyCode.D,CONTROL_DOWN);
+    final static KeyCombination KEY_CONTROL_E = new KeyCodeCombination(KeyCode.E,CONTROL_DOWN);
     final static KeyCombination KEY_CONTROL_F = new KeyCodeCombination(KeyCode.F,CONTROL_DOWN);
     final static KeyCombination KEY_CONTROL_G = new KeyCodeCombination(KeyCode.G,CONTROL_DOWN);
     final static KeyCombination KEY_CONTROL_N = new KeyCodeCombination(KeyCode.N,CONTROL_DOWN);

@@ -6,6 +6,8 @@ public enum RecordState{
 
     DECOMMISSIONED, // forwarder does NOT exist in cPanel
 
-    CHANGED         // forwarder has changed target
+    CHANGED,        // forwarder has changed target
                     // (if forwarder string itself had changed, it would be a different record)
+
+    MODIFIED        // user has modified one or more attributes of a record
 }
