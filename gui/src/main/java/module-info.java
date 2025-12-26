@@ -14,4 +14,5 @@ module org.springdot.forpan.gui {
     requires org.springdot.forpan.config;
     requires org.springdot.forpan.util;
     requires org.kordamp.ikonli.fontawesome5;
+    requires java.logging;
 }

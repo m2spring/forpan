@@ -41,12 +41,14 @@ import org.springdot.forpan.model.FwRecord;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 
 import static org.springdot.forpan.model.RecordState.COMMISSIONED;
 import static org.springdot.forpan.model.RecordState.DECOMMISSIONED;
 import static org.springdot.forpan.util.Util.callIfIntPropertyIsSet;
 
 class MainWindow{
+    private static final Logger LOG = Logger.getLogger(MainWindow.class.getName());
 
     private Env env;
     private Stage stage;
@@ -146,7 +148,7 @@ class MainWindow{
 
     private void handleKey(KeyEvent ev){
         if (Common.KEY_CONTROL_Q.match(ev)){
-            System.out.println("exit");
+            LOG.info("exit");
             Platform.exit();
             System.exit(0);
         }else if (Common.KEY_CONTROL_R.match(ev)){

@@ -6,4 +6,5 @@ module org.springdot.forpan.model{
     requires org.springdot.forpan.config;
     requires org.springdot.forpan.util;
     requires org.apache.commons.lang3;
+    requires java.logging;
 }

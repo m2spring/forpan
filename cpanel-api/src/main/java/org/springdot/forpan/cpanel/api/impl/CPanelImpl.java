@@ -20,9 +20,11 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 public class CPanelImpl implements CPanelAPI{
+    private static final Logger LOG = Logger.getLogger(CPanelImpl.class.getName());
 
     private CPanelAccessDetails accessDetails;
     private boolean verbose = false;
@@ -156,7 +158,9 @@ public class CPanelImpl implements CPanelAPI{
     }
 
     private HttpResponse<String> doGet(String path){
+        // TODO: rip out the verbose flag
         if (verbose) System.out.println("url: "+path);
+        LOG.fine("url: "+path);
         var client = HttpClient.newBuilder()
             .followRedirects(HttpClient.Redirect.NORMAL)
             .build();
@@ -167,7 +171,9 @@ public class CPanelImpl implements CPanelAPI{
             .build();
         try{
             HttpResponse rsp = checkStatus(req, client.send(req, HttpResponse.BodyHandlers.ofString()));
+            // TODO: rip out the verbose flag
             if (verbose) System.out.println("<body>\n"+StringUtils.trim(""+rsp.body())+"\n</body>");
+            LOG.fine("<body>\n"+StringUtils.trim(""+rsp.body())+"\n</body>");
             return rsp;
         }catch (Exception e){
             throw new RuntimeException(e+"\npath: "+path);
