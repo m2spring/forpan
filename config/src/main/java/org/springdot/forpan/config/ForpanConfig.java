@@ -6,8 +6,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public class ForpanConfig{
+    private static final Logger LOG = Logger.getLogger(ForpanConfig.class.getName());
 
     public final static String DISABLED_RECORD_BACKUP_PROP = "disable.record.backup";
 
@@ -30,7 +32,7 @@ public class ForpanConfig{
         Properties props = new Properties();
         File fn = getPropertiesFile();
         if (fn.exists()){
-            // TODO: logging System.out.println("loading config from "+fn);
+            LOG.info("loading config from "+fn);
             try{
                 props.load(new FileInputStream(fn));
             }catch (IOException e){

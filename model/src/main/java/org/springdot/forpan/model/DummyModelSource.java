@@ -10,9 +10,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 public class DummyModelSource implements ModelSource{
+    private static final Logger LOG = Logger.getLogger(DummyModelSource.class.getName());
+
     private final List<CPanelDomain> domains = Stream.of(
         "example.com",
         "example.org",
@@ -33,7 +36,7 @@ public class DummyModelSource implements ModelSource{
                     recs.add(new FwRecord(fwdr,trgt));
                     break;
                 }
-                System.out.println("hit duplicate "+fwdr); // very unlikely
+                LOG.warning("hit duplicate "+fwdr); // very unlikely
             }
         }
 

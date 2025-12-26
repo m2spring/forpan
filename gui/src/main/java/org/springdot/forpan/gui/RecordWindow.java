@@ -32,12 +32,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 
 import static javafx.scene.input.KeyEvent.KEY_PRESSED;
 import static org.springdot.forpan.gui.Common.EMAIL_ADDRESS_PATTERN;
 import static org.springdot.forpan.util.Util.escapeJava;
 
 class RecordWindow{
+    private static final Logger LOG = Logger.getLogger(RecordWindow.class.getName());
+
     private Env env;
     private Stage primaryStage;
     private Memo memo;
@@ -218,8 +221,8 @@ class RecordWindow{
         }
 
         // TODO: a real logging
-        System.out.println("[warning] unable to set domain "+escapeJava(domain));
-        System.out.println("available domains: "+items);
+        LOG.warning("unable to set domain "+escapeJava(domain));
+        LOG.warning("available domains: "+items);
         domainAttr.field.getSelectionModel().selectFirst();
     }
 
