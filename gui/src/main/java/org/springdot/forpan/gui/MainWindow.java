@@ -282,6 +282,7 @@ class MainWindow{
     private void setFilterPredicate(String searchStr){
         filteredRecs.setPredicate(rec ->
             StringUtils.containsIgnoreCase(rec.getForwarder(),searchStr)
+            || StringUtils.containsIgnoreCase(rec.getTitle(),searchStr)
         );
     }
 
