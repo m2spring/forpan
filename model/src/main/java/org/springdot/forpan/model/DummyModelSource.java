@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.RandomStringGenerator;
 import org.springdot.forpan.cpanel.api.CPanelDomain;
 import org.springdot.forpan.util.Lazy;
+import org.springdot.forpan.util.RandomWordGenerator;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -24,6 +25,7 @@ public class DummyModelSource implements ModelSource{
 
     private Lazy<List<FwRecord>> randomRecords = Lazy.of(() -> {
         RandomStringGenerator rsg = new RandomStringGenerator.Builder().withinRange('a','z').build();
+        RandomWordGenerator rwg = new RandomWordGenerator();
         Random rnd = new Random(System.nanoTime());
         List<FwRecord> recs = new ArrayList<>();
         Set<String> fwrds = new HashSet<>();
@@ -33,7 +35,9 @@ public class DummyModelSource implements ModelSource{
             while (true){
                 String fwdr = rsg.generate(5,10)+"@"+domains.get(rnd.nextInt(domains.size()));
                 if (fwrds.add(fwdr)){
-                    recs.add(new FwRecord(fwdr,trgt));
+                    FwRecord rec = new FwRecord(fwdr,trgt);
+                    rec.setTitle(rwg.generate());
+                    recs.add(rec);
                     break;
                 }
                 LOG.warning("hit duplicate "+fwdr); // very unlikely
