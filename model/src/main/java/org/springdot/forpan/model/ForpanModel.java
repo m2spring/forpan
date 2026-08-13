@@ -68,20 +68,26 @@ public class ForpanModel{
     }
 
     public void removeForwarder(FwRecord rec){
+        if (records != null) records.remove(rec);
         modelSource.removeForwarder(rec);
     }
 
-    public void load(){
-        File f = mkFilename("");
+    public static ForpanModel load(String fn){
+        File f = mkFilename(fn);
         if (f.exists()){
             try{
-                ForpanModel fm = mapper.get().readValue(f,ForpanModel.class);
-                domains = fm.domains;
-                records = fm.records;
+                return mapper.get().readValue(f, ForpanModel.class);
             }catch (IOException e){
                 throw new RuntimeException(e);
             }
         }
+        return new ForpanModel();
+    }
+
+    public void load(){
+        ForpanModel fm = load("");
+        domains = fm.domains;
+        records = fm.records;
     }
 
     public void save(){
