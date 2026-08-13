@@ -254,7 +254,11 @@ class RecordWindow{
         }
 
         dialog.close();
-        env.mainWindow.refreshTable();
+        if (origRec != null){
+            env.mainWindow.refreshTableLocal();
+        }else{
+            env.mainWindow.refreshTable();
+        }
 
         // TODO: find a better way to select & navigate to the newly added forwarded
         env.mainWindow.gotoForwarderByName(forwarder);

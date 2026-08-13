@@ -250,6 +250,10 @@ class MainWindow{
         refreshTable(model -> model.syncFromServer());
     }
 
+    void refreshTableLocal(){
+        refreshTable(model -> {});
+    }
+
     void refreshTable(Consumer<ForpanModel> modelAction){
         SortState sortState = SortState.get(table);
         FwRecord currFwdr = getSelectedForwarder();
@@ -264,6 +268,7 @@ class MainWindow{
         SortedList<FwRecord> sortedRecs = new SortedList<>(filteredRecs);
         table.setItems(sortedRecs);
         sortedRecs.comparatorProperty().bind(table.comparatorProperty());
+        table.refresh();
 
         sortState.apply(table);
         if (currFwdr != null){
