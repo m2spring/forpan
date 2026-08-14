@@ -57,6 +57,7 @@ class MainWindow{
     private TextField statusField;
     private CustomTextField searchField;
     private Button editButton;
+    private Button deleteButton;
 
     public MainWindow(Env env, Stage stage){
         this.env = env;
@@ -91,11 +92,10 @@ class MainWindow{
                 c.add(editButton);
             }
             {
-                var b = new Button("Delete");
-                b.setTooltip(new Tooltip("Delete current forwarder"));
-                // TODO: Delete button should only be active if a row is selected and forwarder is not decommissioned
-                b.setOnAction(this::delRecord);
-                c.add(b);
+                deleteButton = new Button("Delete");
+                deleteButton.setTooltip(new Tooltip("Delete current forwarder"));
+                deleteButton.setOnAction(this::delRecord);
+                c.add(deleteButton);
             }
             {
                 var r = new Region();
@@ -121,8 +121,8 @@ class MainWindow{
         bp.setCenter(mkTable());
         bp.setBottom(statusField);
 
-        table.getSelectionModel().selectedItemProperty().addListener((observable,oldVal,newVal) -> updateEditButtonState(newVal));
-        updateEditButtonState(table.getSelectionModel().getSelectedItem());
+        table.getSelectionModel().selectedItemProperty().addListener((observable,oldVal,newVal) -> updateButtonStates(newVal));
+        updateButtonStates(table.getSelectionModel().getSelectedItem());
 
         var scene = new Scene(bp,800,600);
         scene.setOnKeyPressed(this::handleKey);
@@ -381,8 +381,10 @@ class MainWindow{
         return rec != null && rec.getLastState() != DECOMMISSIONED;
     }
 
-    private void updateEditButtonState(FwRecord rec){
-        editButton.setDisable(!isModifiable(rec));
+    private void updateButtonStates(FwRecord rec){
+        boolean modifiable = isModifiable(rec);
+        editButton.setDisable(!modifiable);
+        deleteButton.setDisable(!modifiable);
     }
 
     private void copyRecord(){
