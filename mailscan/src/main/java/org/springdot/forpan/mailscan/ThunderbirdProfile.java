@@ -1,10 +1,14 @@
 package org.springdot.forpan.mailscan;
 
+import org.springdot.forpan.config.ForpanConfig;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /** Locates the default Thunderbird profile directory via {@code ~/.thunderbird/profiles.ini}. */
 public class ThunderbirdProfile{
@@ -49,5 +53,14 @@ public class ThunderbirdProfile{
 
     public static File inboxFile(File profileDir, String account){
         return new File(profileDir,"Mail/"+account+"/Inbox");
+    }
+
+    /** Inbox files for the accounts listed in config.properties' {@code mailscan.accounts}. */
+    public static List<File> configuredInboxFiles() throws IOException{
+        List<String> accounts = ForpanConfig.getMailscanAccounts();
+        File profileDir = findDefaultProfileDir();
+        return accounts.stream()
+            .map(account -> inboxFile(profileDir,account))
+            .collect(Collectors.toList());
     }
 }
