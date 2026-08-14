@@ -30,6 +30,7 @@
     <module>core</module>
     <module>cli</module>
     <module>cpanel-api</module>
+    <module>mailscan</module>
     <module>gui</module>
   </modules>
 
