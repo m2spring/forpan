@@ -56,6 +56,7 @@ class MainWindow{
     private TableView<FwRecord> table;
     private TextField statusField;
     private CustomTextField searchField;
+    private Button editButton;
 
     public MainWindow(Env env, Stage stage){
         this.env = env;
@@ -84,11 +85,10 @@ class MainWindow{
                 c.add(b);
             }
             {
-                var b = new Button("Edit");
-                b.setTooltip(new Tooltip("Edit current forwarder"));
-                // TODO: Edit button should only be active if a row is selected and forwarder is not decommissioned
-                b.setOnAction(this::editRecord);
-                c.add(b);
+                editButton = new Button("Edit");
+                editButton.setTooltip(new Tooltip("Edit current forwarder"));
+                editButton.setOnAction(this::editRecord);
+                c.add(editButton);
             }
             {
                 var b = new Button("Delete");
@@ -120,6 +120,9 @@ class MainWindow{
         bp.setTop(toolbar);
         bp.setCenter(mkTable());
         bp.setBottom(statusField);
+
+        table.getSelectionModel().selectedItemProperty().addListener((observable,oldVal,newVal) -> updateEditButtonState(newVal));
+        updateEditButtonState(table.getSelectionModel().getSelectedItem());
 
         var scene = new Scene(bp,800,600);
         scene.setOnKeyPressed(this::handleKey);
@@ -369,9 +372,17 @@ class MainWindow{
 
     private void applyToCurrFwdr(Consumer<FwRecord> action){
         FwRecord currFwdr = getSelectedForwarder();
-        if (currFwdr != null && currFwdr.getLastState() != DECOMMISSIONED){
+        if (isModifiable(currFwdr)){
             action.accept(currFwdr);
         }
+    }
+
+    private boolean isModifiable(FwRecord rec){
+        return rec != null && rec.getLastState() != DECOMMISSIONED;
+    }
+
+    private void updateEditButtonState(FwRecord rec){
+        editButton.setDisable(!isModifiable(rec));
     }
 
     private void copyRecord(){
