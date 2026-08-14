@@ -2,6 +2,7 @@ package org.springdot.forpan.gui;
 
 import atlantafx.base.theme.PrimerDark;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -11,8 +12,18 @@ import java.util.logging.Logger;
 public class App extends Application {
     private static final Logger LOG = Logger.getLogger(App.class.getName());
 
+    private static SingleInstanceGuard instanceGuard;
+
     public static void main(String[] args) {
         configureLogging();
+
+        instanceGuard = SingleInstanceGuard.acquire();
+        if (instanceGuard == null){
+            LOG.info("another instance is already running, exiting");
+            return;
+        }
+        Runtime.getRuntime().addShutdownHook(new Thread(instanceGuard::close));
+
         launch();
     }
 
@@ -37,6 +48,12 @@ public class App extends Application {
         MainWindow w = new MainWindow(env,stage);
         env.mainWindow = w;
         w.show();
+
+        instanceGuard.listenForFocusRequests(() -> Platform.runLater(() -> {
+            stage.setIconified(false);
+            stage.toFront();
+            stage.requestFocus();
+        }));
 
         new Thread(() -> {
             w.refreshTable(model -> model.load());
