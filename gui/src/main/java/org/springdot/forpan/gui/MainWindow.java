@@ -4,6 +4,7 @@ import atlantafx.base.controls.CustomTextField;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -35,12 +36,19 @@ import javafx.util.Duration;
 import org.apache.commons.lang3.StringUtils;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.material2.Material2MZ;
+import org.springdot.forpan.mailscan.MailboxAddressLister;
+import org.springdot.forpan.mailscan.ThunderbirdProfile;
 import org.springdot.forpan.model.ForpanModel;
 import org.springdot.forpan.model.FwRecord;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static org.springdot.forpan.model.RecordState.COMMISSIONED;
@@ -58,6 +66,8 @@ class MainWindow{
     private CustomTextField searchField;
     private Button editButton;
     private Button deleteButton;
+    private TableColumn<FwRecord,Integer> mailboxCol;
+    private volatile Map<String,Integer> mailboxRank = Map.of();
 
     public MainWindow(Env env, Stage stage){
         this.env = env;
@@ -181,12 +191,13 @@ class MainWindow{
         var fwdrCol = new TableColumn<FwRecord,String>("Forwarder");
         var statCol = new TableColumn<FwRecord,Void>("State");
         var trgtCol = new TableColumn<FwRecord,String>("Target");
+        mailboxCol = new TableColumn<FwRecord,Integer>("Mailbox");
 
         titleCol.setCellValueFactory(new PropertyValueFactory<FwRecord,String>("title"));
         titleCol.prefWidthProperty().bind(table.widthProperty().multiply(0.1));
 
         fwdrCol.setCellValueFactory(new PropertyValueFactory<FwRecord,String>("forwarder"));
-        fwdrCol.prefWidthProperty().bind(table.widthProperty().multiply(0.6));
+        fwdrCol.prefWidthProperty().bind(table.widthProperty().multiply(0.52));
         fwdrCol.setCellFactory(rec -> new TableCell<>(){
             private final Text text = new Text();
             private final Tooltip tooltip = new Tooltip();
@@ -239,14 +250,52 @@ class MainWindow{
         trgtCol.setCellValueFactory(new PropertyValueFactory<FwRecord,String>("target"));
         trgtCol.prefWidthProperty().bind(table.widthProperty().multiply(0.25));
 
+        mailboxCol.setCellValueFactory(cd -> {
+            String fwdr = cd.getValue().getForwarder();
+            Integer rank = fwdr == null? null : mailboxRank.get(fwdr.toLowerCase(Locale.ROOT));
+            return new SimpleObjectProperty<>(rank);
+        });
+        mailboxCol.setComparator((a,b) -> {
+            if (a == null && b == null) return 0;
+            if (a == null) return 1;
+            if (b == null) return -1;
+            return Integer.compare(a,b);
+        });
+        mailboxCol.prefWidthProperty().bind(table.widthProperty().multiply(0.08));
+
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        table.getColumns().addAll(titleCol,fwdrCol,statCol,trgtCol);
+        table.getColumns().addAll(titleCol,fwdrCol,statCol,trgtCol,mailboxCol);
         table.getSelectionModel().selectedItemProperty().addListener((observable,oldVal,newVal) -> {
             if (newVal == null && !table.getItems().isEmpty()){
                 table.getSelectionModel().select(0);
             }
         });
         return table;
+    }
+
+    /**
+     * Scans the mailbox(es) configured under config.properties' "mailscan.accounts" and
+     * ranks each forwarder address by how recently it last showed up there (1 = most
+     * recent), so a recently-used forwarder is easy to spot for possible decommissioning.
+     * Runs on a background thread; safe to skip (leaves the Mailbox column blank) if
+     * nothing is configured or the scan fails for any reason.
+     */
+    void loadMailboxRanks(){
+        try{
+            List<File> mboxFiles = ThunderbirdProfile.configuredInboxFiles();
+            if (mboxFiles.isEmpty()) return;
+
+            List<String> addresses = new MailboxAddressLister().listByRecency(mboxFiles);
+            Map<String,Integer> rank = new HashMap<>();
+            for (int i=0, n=addresses.size(); i<n; i++){
+                rank.put(addresses.get(i),i+1);
+            }
+            mailboxRank = rank;
+
+            Platform.runLater(table::refresh);
+        }catch (Exception e){
+            LOG.log(Level.WARNING,"could not scan configured mailboxes",e);
+        }
     }
 
     void refreshTable(){
@@ -265,20 +314,31 @@ class MainWindow{
         List<FwRecord> recs = env.model.getRecords();
         setStatus("model loaded ("+recs.size()+")");
 
-        filteredRecs = new FilteredList<>(FXCollections.observableArrayList(recs));
-        setFilterPredicate(searchField.getText());
+        // this method is also called from a background thread (see App.start()), so all
+        // TableView mutations below - notably sortState.apply(), which touches the sort-order
+        // list the column headers listen on - must happen on the FX application thread.
+        Runnable applyToTable = () -> {
+            filteredRecs = new FilteredList<>(FXCollections.observableArrayList(recs));
+            setFilterPredicate(searchField.getText());
 
-        SortedList<FwRecord> sortedRecs = new SortedList<>(filteredRecs);
-        table.setItems(sortedRecs);
-        sortedRecs.comparatorProperty().bind(table.comparatorProperty());
-        table.refresh();
+            SortedList<FwRecord> sortedRecs = new SortedList<>(filteredRecs);
+            table.setItems(sortedRecs);
+            sortedRecs.comparatorProperty().bind(table.comparatorProperty());
+            table.refresh();
 
-        sortState.apply(table);
-        if (currFwdr != null){
-            gotoForwarderByName(currFwdr.getForwarder());
+            sortState.apply(table);
+            if (currFwdr != null){
+                gotoForwarderByName(currFwdr.getForwarder());
+            }else{
+                table.getSelectionModel().select(0);
+                table.scrollTo(0);
+            }
+        };
+
+        if (Platform.isFxApplicationThread()){
+            applyToTable.run();
         }else{
-            table.getSelectionModel().select(0);
-            Platform.runLater(() -> table.scrollTo(0));
+            Platform.runLater(applyToTable);
         }
     }
 

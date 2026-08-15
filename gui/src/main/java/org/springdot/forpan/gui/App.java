@@ -59,5 +59,7 @@ public class App extends Application {
             w.refreshTable(model -> model.load());
             w.refreshTable();
         }).start();
+
+        new Thread(w::loadMailboxRanks).start();
     }
 }
