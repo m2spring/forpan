@@ -6,6 +6,7 @@ module org.springdot.forpan.gui {
     requires org.springdot.forpan.core;
     requires org.springdot.forpan.cpanel.api;
     requires org.springdot.forpan.model;
+    requires org.springdot.forpan.mailscan;
     requires com.fasterxml.jackson.databind;
     requires org.apache.commons.lang3;
     requires org.apache.commons.text;
