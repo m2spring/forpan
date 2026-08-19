@@ -72,6 +72,12 @@ public class ForpanModel{
         modelSource.removeForwarder(rec);
     }
 
+    public void decommissionForwarder(FwRecord rec){
+        modelSource.removeForwarder(rec);
+        appendState(rec,DECOMMISSIONED);
+        save();
+    }
+
     public static ForpanModel load(String fn){
         File f = mkFilename(fn);
         if (f.exists()){

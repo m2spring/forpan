@@ -65,7 +65,7 @@ class MainWindow{
     private TextField statusField;
     private CustomTextField searchField;
     private Button editButton;
-    private Button deleteButton;
+    private Button decommissionButton;
     private TableColumn<FwRecord,Integer> mailboxCol;
     private volatile Map<String,Integer> mailboxRank = Map.of();
 
@@ -102,10 +102,10 @@ class MainWindow{
                 c.add(editButton);
             }
             {
-                deleteButton = new Button("Delete");
-                deleteButton.setTooltip(new Tooltip("Delete current forwarder"));
-                deleteButton.setOnAction(this::delRecord);
-                c.add(deleteButton);
+                decommissionButton = new Button("Decommission");
+                decommissionButton.setTooltip(new Tooltip("Decommission current forwarder"));
+                decommissionButton.setOnAction(this::decommissionRecord);
+                c.add(decommissionButton);
             }
             {
                 var r = new Region();
@@ -171,7 +171,7 @@ class MainWindow{
         }else if (Common.KEY_CONTROL_E.match(ev) || Common.KEY_ENTER.match(ev)){
             editRecord(null);
         }else if (Common.KEY_CONTROL_D.match(ev) || Common.KEY_DELETE.match(ev)){
-            delRecord(null);
+            decommissionRecord(null);
         }else if (Common.KEY_CONTROL_C.match(ev)){
             copyRecord();
         }else if (Common.KEY_CONTROL_F.match(ev)){
@@ -410,18 +410,18 @@ class MainWindow{
         });
     }
 
-    private void delRecord(ActionEvent aev){
+    private void decommissionRecord(ActionEvent aev){
         applyToCurrFwdr(currFwdr -> {
             var alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.initOwner(stage);
             alert.setTitle("Confirmation");
-            alert.setHeaderText("Delete Forwarder?");
+            alert.setHeaderText("Decommission Forwarder?");
             alert.setContentText(currFwdr.getForwarder()+" → "+currFwdr.getTarget());
             Optional<ButtonType> res = alert.showAndWait();
 
             if (res.get() == ButtonType.OK){
                 int currIdx = table.getSelectionModel().getSelectedIndex();
-                env.model.removeForwarder(currFwdr);
+                env.model.decommissionForwarder(currFwdr);
                 refreshTable();
                 int size = table.getItems().size();
                 if (currIdx > size) currIdx = size-1;
@@ -444,7 +444,7 @@ class MainWindow{
     private void updateButtonStates(FwRecord rec){
         boolean modifiable = isModifiable(rec);
         editButton.setDisable(!modifiable);
-        deleteButton.setDisable(!modifiable);
+        decommissionButton.setDisable(!modifiable);
     }
 
     private void copyRecord(){
