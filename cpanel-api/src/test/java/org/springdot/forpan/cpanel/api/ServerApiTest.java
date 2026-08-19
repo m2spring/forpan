@@ -3,16 +3,13 @@ package org.springdot.forpan.cpanel.api;
 import org.junit.Test;
 import org.springdot.forpan.util.Lazy;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.springdot.forpan.util.TestUtil.showMethod;
 
+// runs against the real, configured cPanel account - read-only calls only, see MockApiTest for write coverage
 public class ServerApiTest{
 
     @Test
@@ -38,28 +35,6 @@ public class ServerApiTest{
     }
 
     private Lazy<List<CPanelDomain>> domains = Lazy.of(() -> getConfiguredAPI().getDomains());
-
-    @Test
-    public void testAddForwarder() throws Exception{
-        exec(api -> {
-            List<CPanelDomain> dmns = domains.get();
-            assertTrue("no configured domains",dmns.size() > 0);
-
-            String fwdr = "forpan-"+new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date())+"@"+dmns.get(0);
-            String trgt = "user@example.org";
-            CPanelForwarder cpf = api.addForwarder(new CPanelForwarder(fwdr,trgt));
-            assertEquals(fwdr,cpf.forwarder());
-            assertEquals(trgt,cpf.target());
-
-            testDeleteForwarder(cpf);
-        });
-    }
-
-    private void testDeleteForwarder(CPanelForwarder cpf){
-        exec(api -> {
-            api.delForwarder(cpf);
-        });
-    }
 
     private void exec(Consumer<CPanelAPI> r){
         CPanelAPI api = getConfiguredAPI();

@@ -112,6 +112,17 @@ public class MockApiTest{
         assertEquals(trgt,cpf.target());
     }
 
+    @Test
+    public void testDelForwarder() throws Exception{
+        showMethod();
+
+        server.enqueue(new MockResponse().setBody("""
+            {"warnings":null,"data":null,"errors":null,"metadata":{},"status":1,"messages":null}
+        """));
+
+        api.get().delForwarder(new CPanelForwarder("faddr@fdomain.org","taddr@tdomain.org"));
+    }
+
     private Lazy<CPanelAPI> api = Lazy.of(() ->
         CPanelAPI.mkImpl(
             new CPanelAccessDetails().setEndpoint("http://localhost:"+server.getPort())
