@@ -47,7 +47,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -66,6 +68,7 @@ class MainWindow{
     private CustomTextField searchField;
     private Button editButton;
     private Button decommissionButton;
+    private Button commissionButton;
     private TableColumn<FwRecord,Integer> mailboxCol;
     private volatile Map<String,Integer> mailboxRank = Map.of();
 
@@ -106,6 +109,12 @@ class MainWindow{
                 decommissionButton.setTooltip(new Tooltip("Decommission current forwarder"));
                 decommissionButton.setOnAction(this::decommissionRecord);
                 c.add(decommissionButton);
+            }
+            {
+                commissionButton = new Button("Commission");
+                commissionButton.setTooltip(new Tooltip("Commission current forwarder"));
+                commissionButton.setOnAction(this::commissionRecord);
+                c.add(commissionButton);
             }
             {
                 var r = new Region();
@@ -411,23 +420,40 @@ class MainWindow{
     }
 
     private void decommissionRecord(ActionEvent aev){
-        applyToCurrFwdr(currFwdr -> {
-            var alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.initOwner(stage);
-            alert.setTitle("Confirmation");
-            alert.setHeaderText("Decommission Forwarder?");
-            alert.setContentText(currFwdr.getForwarder()+" → "+currFwdr.getTarget());
-            Optional<ButtonType> res = alert.showAndWait();
+        confirmAndChangeState(
+            this::isModifiable,
+            "Decommission Forwarder?",
+            ForpanModel::decommissionForwarder
+        );
+    }
 
-            if (res.get() == ButtonType.OK){
-                int currIdx = table.getSelectionModel().getSelectedIndex();
-                env.model.decommissionForwarder(currFwdr);
-                refreshTable();
-                int size = table.getItems().size();
-                if (currIdx > size) currIdx = size-1;
-                table.getSelectionModel().select(currIdx);
-            }
-        });
+    private void commissionRecord(ActionEvent aev){
+        confirmAndChangeState(
+            rec -> rec.getLastState() == DECOMMISSIONED,
+            "Commission Forwarder?",
+            ForpanModel::commissionForwarder
+        );
+    }
+
+    private void confirmAndChangeState(Predicate<FwRecord> eligible, String headerText, BiConsumer<ForpanModel,FwRecord> modelAction){
+        FwRecord currFwdr = getSelectedForwarder();
+        if (currFwdr == null || !eligible.test(currFwdr)) return;
+
+        var alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(stage);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(headerText);
+        alert.setContentText(currFwdr.getForwarder()+" → "+currFwdr.getTarget());
+        Optional<ButtonType> res = alert.showAndWait();
+
+        if (res.get() == ButtonType.OK){
+            int currIdx = table.getSelectionModel().getSelectedIndex();
+            modelAction.accept(env.model,currFwdr);
+            refreshTable();
+            int size = table.getItems().size();
+            if (currIdx > size) currIdx = size-1;
+            table.getSelectionModel().select(currIdx);
+        }
     }
 
     private void applyToCurrFwdr(Consumer<FwRecord> action){
@@ -445,6 +471,7 @@ class MainWindow{
         boolean modifiable = isModifiable(rec);
         editButton.setDisable(!modifiable);
         decommissionButton.setDisable(!modifiable);
+        commissionButton.setDisable(modifiable || rec == null);
     }
 
     private void copyRecord(){
