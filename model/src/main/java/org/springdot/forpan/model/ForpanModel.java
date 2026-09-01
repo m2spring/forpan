@@ -78,6 +78,12 @@ public class ForpanModel{
         save();
     }
 
+    public void commissionForwarder(FwRecord rec){
+        modelSource.createForwarder(rec);
+        appendState(rec,COMMISSIONED);
+        save();
+    }
+
     public static ForpanModel load(String fn){
         File f = mkFilename(fn);
         if (f.exists()){
