@@ -34,4 +34,15 @@ public class MboxMessage{
     public String getDate(){
         return getHeader("Date");
     }
+
+    /** True if Thunderbird's X-Mozilla-Status marks this message deleted (pending compaction). */
+    public boolean isDeleted(){
+        String status = getHeader("X-Mozilla-Status");
+        if (status == null) return false;
+        try{
+            return (Integer.parseInt(status.trim(),16) & 0x0008) != 0;
+        }catch (NumberFormatException e){
+            return false;
+        }
+    }
 }

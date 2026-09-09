@@ -19,6 +19,7 @@ public class MailboxAddressLister{
 
         for (File mboxFile : mboxFiles){
             for (MboxMessage msg : mboxReader.read(mboxFile)){
+                if (msg.isDeleted()) continue;
                 Instant date = MailDates.parse(msg.getDate());
                 Instant effectiveDate = date != null? date : Instant.MIN;
                 for (String addr : AddressExtractor.extract(msg.getTo(),msg.getCc())){
